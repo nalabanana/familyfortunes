@@ -66,11 +66,13 @@ button,
   cursor: pointer;
   font-weight: 700;
   padding: 0.55rem 0.9rem;
-  min-height: 42px;
+  height: 44px;
+  min-height: 44px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   text-align: center;
+  text-decoration: none;
 }
 
 button:hover,
@@ -97,11 +99,43 @@ button:hover,
 }
 
 .setup-actions-row > * {
-  flex: 1 1 180px;
+  flex: 1 1 200px;
 }
 
 #load-game-input {
   display: none;
+}
+
+.options-panel {
+  margin-top: 1rem;
+  border: 1px solid #4b5563;
+  border-radius: 10px;
+  padding: 0.7rem 0.8rem;
+  background: #0b1220;
+}
+
+.options-panel h3 {
+  margin: 0 0 0.6rem;
+}
+
+.option-row {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.35rem;
+}
+
+.option-row p {
+  margin: 0;
+  min-width: 170px;
+}
+
+.option-row label {
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
 }
 
 .round-editor {
@@ -223,6 +257,7 @@ button:hover,
   padding: 0.3rem 0.5rem;
   font-size: 0.85rem;
   min-height: 34px;
+  height: 34px;
 }
 
 .winner-banner {
@@ -238,6 +273,10 @@ button:hover,
 .game-result-sub {
   margin-top: 0.35rem;
   font-weight: 500;
+}
+
+.bottom-add-row {
+  justify-content: center;
 }
 
 @media (max-width: 900px) {
@@ -259,9 +298,4 @@ button:hover,
   .answer-tile {
     grid-template-columns: 1fr;
   }
-}
-
-
-.bottom-add-row {
-  justify-content: center;
 }
