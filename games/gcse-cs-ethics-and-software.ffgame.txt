@@ -1,0 +1,73 @@
+{
+  "title": "GCSE Computer Science - Ethics and Software",
+  "options": {
+    "randomRoundOrder": false,
+    "themeMusic": true
+  },
+  "teams": [
+    { "name": "Team A", "score": 0 },
+    { "name": "Team B", "score": 0 }
+  ],
+  "rounds": [
+    {
+      "question": "Name a legal or ethical issue in computing",
+      "answers": [
+        { "text": "Privacy", "points": 30, "revealed": false },
+        { "text": "Copyright", "points": 24, "revealed": false },
+        { "text": "Hacking", "points": 20, "revealed": false },
+        { "text": "Bias in AI", "points": 14, "revealed": false },
+        { "text": "Digital divide", "points": 12, "revealed": false }
+      ],
+      "strikes": [0, 0],
+      "roundScores": [0, 0]
+    },
+    {
+      "question": "Name a type of software",
+      "answers": [
+        { "text": "Operating system", "points": 34, "revealed": false },
+        { "text": "Utility software", "points": 22, "revealed": false },
+        { "text": "Application software", "points": 20, "revealed": false },
+        { "text": "Library", "points": 12, "revealed": false },
+        { "text": "Translator", "points": 12, "revealed": false }
+      ],
+      "strikes": [0, 0],
+      "roundScores": [0, 0]
+    },
+    {
+      "question": "Name a translator used in programming",
+      "answers": [
+        { "text": "Compiler", "points": 38, "revealed": false },
+        { "text": "Interpreter", "points": 34, "revealed": false },
+        { "text": "Assembler", "points": 16, "revealed": false },
+        { "text": "JIT compiler", "points": 7, "revealed": false },
+        { "text": "Decompiler", "points": 5, "revealed": false }
+      ],
+      "strikes": [0, 0],
+      "roundScores": [0, 0]
+    },
+    {
+      "question": "Name a software development model or approach",
+      "answers": [
+        { "text": "Agile", "points": 35, "revealed": false },
+        { "text": "Waterfall", "points": 30, "revealed": false },
+        { "text": "Iterative", "points": 15, "revealed": false },
+        { "text": "Prototyping", "points": 12, "revealed": false },
+        { "text": "Spiral", "points": 8, "revealed": false }
+      ],
+      "strikes": [0, 0],
+      "roundScores": [0, 0]
+    },
+    {
+      "question": "Name something included in software testing",
+      "answers": [
+        { "text": "Normal test data", "points": 28, "revealed": false },
+        { "text": "Boundary test data", "points": 24, "revealed": false },
+        { "text": "Erroneous test data", "points": 20, "revealed": false },
+        { "text": "Expected results", "points": 16, "revealed": false },
+        { "text": "Test plan", "points": 12, "revealed": false }
+      ],
+      "strikes": [0, 0],
+      "roundScores": [0, 0]
+    }
+  ]
+}

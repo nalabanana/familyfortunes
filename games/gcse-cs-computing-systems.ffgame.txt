@@ -1,0 +1,73 @@
+{
+  "title": "GCSE Computer Science - Computing Systems",
+  "options": {
+    "randomRoundOrder": false,
+    "themeMusic": true
+  },
+  "teams": [
+    { "name": "Team A", "score": 0 },
+    { "name": "Team B", "score": 0 }
+  ],
+  "rounds": [
+    {
+      "question": "Name a key component inside a computer system unit",
+      "answers": [
+        { "text": "CPU", "points": 35, "revealed": false },
+        { "text": "RAM", "points": 25, "revealed": false },
+        { "text": "Storage (SSD/HDD)", "points": 20, "revealed": false },
+        { "text": "Motherboard", "points": 12, "revealed": false },
+        { "text": "Power supply unit", "points": 8, "revealed": false }
+      ],
+      "strikes": [0, 0],
+      "roundScores": [0, 0]
+    },
+    {
+      "question": "Name an input device used with computers",
+      "answers": [
+        { "text": "Keyboard", "points": 33, "revealed": false },
+        { "text": "Mouse", "points": 27, "revealed": false },
+        { "text": "Microphone", "points": 18, "revealed": false },
+        { "text": "Scanner", "points": 12, "revealed": false },
+        { "text": "Webcam", "points": 10, "revealed": false }
+      ],
+      "strikes": [0, 0],
+      "roundScores": [0, 0]
+    },
+    {
+      "question": "Name an output device",
+      "answers": [
+        { "text": "Monitor", "points": 36, "revealed": false },
+        { "text": "Printer", "points": 24, "revealed": false },
+        { "text": "Speakers", "points": 20, "revealed": false },
+        { "text": "Headphones", "points": 12, "revealed": false },
+        { "text": "Projector", "points": 8, "revealed": false }
+      ],
+      "strikes": [0, 0],
+      "roundScores": [0, 0]
+    },
+    {
+      "question": "Name a factor that affects CPU performance",
+      "answers": [
+        { "text": "Clock speed", "points": 30, "revealed": false },
+        { "text": "Number of cores", "points": 25, "revealed": false },
+        { "text": "Cache size", "points": 20, "revealed": false },
+        { "text": "Architecture / generation", "points": 15, "revealed": false },
+        { "text": "Cooling / thermal limits", "points": 10, "revealed": false }
+      ],
+      "strikes": [0, 0],
+      "roundScores": [0, 0]
+    },
+    {
+      "question": "Name a type of secondary storage",
+      "answers": [
+        { "text": "SSD", "points": 34, "revealed": false },
+        { "text": "Hard disk drive", "points": 28, "revealed": false },
+        { "text": "USB flash drive", "points": 16, "revealed": false },
+        { "text": "Memory card", "points": 12, "revealed": false },
+        { "text": "Optical disc", "points": 10, "revealed": false }
+      ],
+      "strikes": [0, 0],
+      "roundScores": [0, 0]
+    }
+  ]
+}

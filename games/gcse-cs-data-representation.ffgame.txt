@@ -1,0 +1,73 @@
+{
+  "title": "GCSE Computer Science - Data Representation",
+  "options": {
+    "randomRoundOrder": false,
+    "themeMusic": true
+  },
+  "teams": [
+    { "name": "Team A", "score": 0 },
+    { "name": "Team B", "score": 0 }
+  ],
+  "rounds": [
+    {
+      "question": "Name a number system GCSE students learn",
+      "answers": [
+        { "text": "Binary", "points": 38, "revealed": false },
+        { "text": "Denary / Decimal", "points": 26, "revealed": false },
+        { "text": "Hexadecimal", "points": 22, "revealed": false },
+        { "text": "Octal", "points": 8, "revealed": false },
+        { "text": "Two's complement", "points": 6, "revealed": false }
+      ],
+      "strikes": [0, 0],
+      "roundScores": [0, 0]
+    },
+    {
+      "question": "Name a unit used for file size",
+      "answers": [
+        { "text": "Byte", "points": 30, "revealed": false },
+        { "text": "Kilobyte", "points": 24, "revealed": false },
+        { "text": "Megabyte", "points": 20, "revealed": false },
+        { "text": "Gigabyte", "points": 16, "revealed": false },
+        { "text": "Terabyte", "points": 10, "revealed": false }
+      ],
+      "strikes": [0, 0],
+      "roundScores": [0, 0]
+    },
+    {
+      "question": "Name something represented using binary in a computer",
+      "answers": [
+        { "text": "Text", "points": 28, "revealed": false },
+        { "text": "Images", "points": 24, "revealed": false },
+        { "text": "Sound", "points": 20, "revealed": false },
+        { "text": "Instructions", "points": 18, "revealed": false },
+        { "text": "Colour values", "points": 10, "revealed": false }
+      ],
+      "strikes": [0, 0],
+      "roundScores": [0, 0]
+    },
+    {
+      "question": "Name a character encoding standard",
+      "answers": [
+        { "text": "ASCII", "points": 40, "revealed": false },
+        { "text": "Unicode", "points": 30, "revealed": false },
+        { "text": "UTF-8", "points": 15, "revealed": false },
+        { "text": "Extended ASCII", "points": 9, "revealed": false },
+        { "text": "UTF-16", "points": 6, "revealed": false }
+      ],
+      "strikes": [0, 0],
+      "roundScores": [0, 0]
+    },
+    {
+      "question": "Name a factor that affects image file size",
+      "answers": [
+        { "text": "Resolution", "points": 33, "revealed": false },
+        { "text": "Colour depth", "points": 25, "revealed": false },
+        { "text": "Compression", "points": 20, "revealed": false },
+        { "text": "Image dimensions", "points": 12, "revealed": false },
+        { "text": "Metadata", "points": 10, "revealed": false }
+      ],
+      "strikes": [0, 0],
+      "roundScores": [0, 0]
+    }
+  ]
+}
