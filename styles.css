@@ -218,6 +218,12 @@ button:hover,
   color: #9ca3af;
 }
 
+.answer-tile.bonus-revealed {
+  border-color: #facc15;
+  background: linear-gradient(180deg, #3a2e00, #5a4400);
+  box-shadow: 0 0 0 1px #facc15 inset;
+}
+
 .answer-controls {
   display: flex;
   gap: 0.4rem;
