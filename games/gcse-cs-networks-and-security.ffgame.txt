@@ -1,0 +1,73 @@
+{
+  "title": "GCSE Computer Science - Networks and Security",
+  "options": {
+    "randomRoundOrder": false,
+    "themeMusic": true
+  },
+  "teams": [
+    { "name": "Team A", "score": 0 },
+    { "name": "Team B", "score": 0 }
+  ],
+  "rounds": [
+    {
+      "question": "Name a network hardware device",
+      "answers": [
+        { "text": "Router", "points": 34, "revealed": false },
+        { "text": "Switch", "points": 24, "revealed": false },
+        { "text": "Wireless access point", "points": 18, "revealed": false },
+        { "text": "NIC", "points": 14, "revealed": false },
+        { "text": "Modem", "points": 10, "revealed": false }
+      ],
+      "strikes": [0, 0],
+      "roundScores": [0, 0]
+    },
+    {
+      "question": "Name something that can improve account security",
+      "answers": [
+        { "text": "Strong password", "points": 32, "revealed": false },
+        { "text": "Two-factor authentication", "points": 28, "revealed": false },
+        { "text": "Biometrics", "points": 16, "revealed": false },
+        { "text": "Regular password changes", "points": 14, "revealed": false },
+        { "text": "Account lockout policy", "points": 10, "revealed": false }
+      ],
+      "strikes": [0, 0],
+      "roundScores": [0, 0]
+    },
+    {
+      "question": "Name a form of malware",
+      "answers": [
+        { "text": "Virus", "points": 30, "revealed": false },
+        { "text": "Trojan", "points": 24, "revealed": false },
+        { "text": "Worm", "points": 20, "revealed": false },
+        { "text": "Spyware", "points": 14, "revealed": false },
+        { "text": "Ransomware", "points": 12, "revealed": false }
+      ],
+      "strikes": [0, 0],
+      "roundScores": [0, 0]
+    },
+    {
+      "question": "Name a network topology",
+      "answers": [
+        { "text": "Star", "points": 34, "revealed": false },
+        { "text": "Bus", "points": 24, "revealed": false },
+        { "text": "Mesh", "points": 18, "revealed": false },
+        { "text": "Ring", "points": 14, "revealed": false },
+        { "text": "Tree", "points": 10, "revealed": false }
+      ],
+      "strikes": [0, 0],
+      "roundScores": [0, 0]
+    },
+    {
+      "question": "Name a way data can be encrypted or protected in transit",
+      "answers": [
+        { "text": "HTTPS / TLS", "points": 36, "revealed": false },
+        { "text": "VPN", "points": 24, "revealed": false },
+        { "text": "WPA2/WPA3", "points": 18, "revealed": false },
+        { "text": "SSH", "points": 12, "revealed": false },
+        { "text": "Digital certificates", "points": 10, "revealed": false }
+      ],
+      "strikes": [0, 0],
+      "roundScores": [0, 0]
+    }
+  ]
+}

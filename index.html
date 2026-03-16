@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Family Fortunes Classroom Game</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main>
+    <section class="panel" id="setup-panel">
+      <div class="setup-top-row">
+        <button id="start-game-btn" type="button" class="success">Start Game</button>
+      </div>
+
+      <h2>Game Setup</h2>
+
+      <div class="actions-row setup-actions-row">
+        <button id="open-game-btn" type="button">Open Game File</button>
+        <button id="save-game-btn" type="button">Save Game File</button>
+        <button id="games-library-btn" type="button">Games Library</button>
+      </div>
+      <input id="load-game-input" type="file" accept=".txt,.json,.ffgame" />
+
+      <label for="game-title">Game Title</label>
+      <input id="game-title" type="text" placeholder="e.g. Year 5 Friday Quiz" />
+
+      <label for="team-name-1">Team 1 Name</label>
+      <input id="team-name-1" type="text" placeholder="e.g. Red Team" />
+
+      <label for="team-name-2">Team 2 Name</label>
+      <input id="team-name-2" type="text" placeholder="e.g. Blue Team" />
+
+      <section class="options-panel">
+        <h3>Options</h3>
+
+        <div class="option-row">
+          <p>Random Round Order</p>
+          <label><input type="radio" name="random-order" id="random-order-on" value="on" /> On</label>
+          <label><input type="radio" name="random-order" id="random-order-off" value="off" checked /> Off</label>
+        </div>
+
+        <div class="option-row">
+          <p>Theme Music</p>
+          <label><input type="radio" name="theme-music" id="theme-music-on" value="on" checked /> On</label>
+          <label><input type="radio" name="theme-music" id="theme-music-off" value="off" /> Off</label>
+        </div>
+      </section>
+
+      <div class="actions-row">
+        <button id="download-sheet-btn" type="button">Download Printable Answer Sheet</button>
+      </div>
+
+      <div id="round-editor-list"></div>
+
+      <div class="actions-row bottom-add-row">
+        <button id="add-round-btn" type="button">Add Round</button>
+      </div>
+    </section>
+
+    <section class="panel hidden" id="play-panel">
+      <h2 id="play-title">Game in Play</h2>
+
+      <div class="play-layout">
+        <aside id="left-team-display" class="team-side"></aside>
+
+        <section class="center-board">
+          <div class="round-header">
+            <button id="prev-round-btn" type="button">Previous Round</button>
+            <p id="round-indicator"></p>
+            <button id="next-round-btn" type="button">Next Round</button>
+          </div>
+
+          <div class="question-card">
+            <h3 id="question-text"></h3>
+          </div>
+
+          <div id="answers-board"></div>
+        </section>
+
+        <aside id="right-team-display" class="team-side"></aside>
+      </div>
+
+      <div id="incorrect-controls" class="actions-row"></div>
+      <div id="game-result" class="winner-banner hidden"></div>
+
+      <div class="actions-row">
+        <button id="back-to-edit-btn" type="button">Back to Setup</button>
+        <button id="reset-scores-btn" type="button" class="danger">Reset Scores</button>
+      </div>
+    </section>
+  </main>
+
+  <template id="round-template">
+    <article class="round-editor">
+      <div class="round-top">
+        <h3 class="round-number"></h3>
+        <button class="remove-round-btn" type="button">Remove Round</button>
+      </div>
+
+      <label>Question</label>
+      <input class="round-question" type="text" placeholder="Survey question" />
+
+      <div class="answers-editor"></div>
+      <button class="add-answer-btn" type="button">Add Answer</button>
+    </article>
+  </template>
+
+  <template id="answer-editor-template">
+    <div class="answer-row">
+      <input class="answer-text" type="text" placeholder="Answer text" />
+      <input class="answer-points" type="number" min="0" step="1" placeholder="Points" />
+      <button class="remove-answer-btn" type="button">✕</button>
+    </div>
+  </template>
+
+  <script src="app.js"></script>
+</body>
+</html>
