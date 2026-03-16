@@ -1,0 +1,249 @@
+{
+  "title": "Network Structure & Topology",
+  "options": {
+    "randomRoundOrder": false,
+    "themeMusic": true,
+    "bonusAnswers": false
+  },
+  "teams": [
+    {
+      "name": "Team A",
+      "score": 0
+    },
+    {
+      "name": "Team B",
+      "score": 0
+    }
+  ],
+  "rounds": [
+    {
+      "question": "Name a type of network topology.",
+      "answers": [
+        {
+          "text": "Star",
+          "points": 30,
+          "revealed": false
+        },
+        {
+          "text": "Bus",
+          "points": 25,
+          "revealed": false
+        },
+        {
+          "text": "Mesh",
+          "points": 20,
+          "revealed": false
+        },
+        {
+          "text": "Ring",
+          "points": 15,
+          "revealed": false
+        },
+        {
+          "text": "Tree",
+          "points": 10,
+          "revealed": false
+        }
+      ],
+      "strikes": [
+        0,
+        0
+      ],
+      "roundScores": [
+        0,
+        0
+      ],
+      "bonusAnswerIndex": null
+    },
+    {
+      "question": "Name something needed to connect a device to Wi-Fi.",
+      "answers": [
+        {
+          "text": "Wireless router",
+          "points": 60,
+          "revealed": false
+        },
+        {
+          "text": "Wireless network adapter / Wi-Fi card",
+          "points": 25,
+          "revealed": false
+        },
+        {
+          "text": "SSID (network name)",
+          "points": 10,
+          "revealed": false
+        },
+        {
+          "text": "Internet service provider",
+          "points": 5,
+          "revealed": false
+        }
+      ],
+      "strikes": [
+        0,
+        0
+      ],
+      "roundScores": [
+        0,
+        0
+      ],
+      "bonusAnswerIndex": null
+    },
+    {
+      "question": "Name a piece of hardware used in computer networks.",
+      "answers": [
+        {
+          "text": "Router",
+          "points": 37,
+          "revealed": false
+        },
+        {
+          "text": "Switch",
+          "points": 23,
+          "revealed": false
+        },
+        {
+          "text": "Modem",
+          "points": 21,
+          "revealed": false
+        },
+        {
+          "text": "Network Interface Card (NIC)",
+          "points": 14,
+          "revealed": false
+        },
+        {
+          "text": "Access Point",
+          "points": 9,
+          "revealed": false
+        },
+        {
+          "text": "Firewall appliance",
+          "points": 6,
+          "revealed": false
+        }
+      ],
+      "strikes": [
+        0,
+        0
+      ],
+      "roundScores": [
+        0,
+        0
+      ],
+      "bonusAnswerIndex": null
+    },
+    {
+      "question": "Name something that can cause problems when data is sent across a network.",
+      "answers": [
+        {
+          "text": "Data collisions",
+          "points": 40,
+          "revealed": false
+        },
+        {
+          "text": "Packet loss",
+          "points": 38,
+          "revealed": false
+        },
+        {
+          "text": "Network congestion",
+          "points": 22,
+          "revealed": false
+        },
+        {
+          "text": "Interference",
+          "points": 7,
+          "revealed": false
+        },
+        {
+          "text": "Latency",
+          "points": 3,
+          "revealed": false
+        }
+      ],
+      "strikes": [
+        0,
+        0
+      ],
+      "roundScores": [
+        0,
+        0
+      ],
+      "bonusAnswerIndex": null
+    },
+    {
+      "question": "Name something involved when you type a website address into your browser.",
+      "answers": [
+        {
+          "text": "DNS server",
+          "points": 31,
+          "revealed": false
+        },
+        {
+          "text": "IP address",
+          "points": 28,
+          "revealed": false
+        },
+        {
+          "text": "Web server",
+          "points": 19,
+          "revealed": false
+        },
+        {
+          "text": "URL",
+          "points": 18,
+          "revealed": false
+        },
+        {
+          "text": "HTTP / HTTPS protocol",
+          "points": 14,
+          "revealed": false
+        }
+      ],
+      "strikes": [
+        0,
+        0
+      ],
+      "roundScores": [
+        0,
+        0
+      ],
+      "bonusAnswerIndex": null
+    },
+    {
+      "question": "What does KES stand for",
+      "answers": [
+        {
+          "text": "VI / 6th",
+          "points": 48,
+          "revealed": false
+        },
+        {
+          "text": "School",
+          "points": 46,
+          "revealed": false
+        },
+        {
+          "text": "Senior",
+          "points": 4,
+          "revealed": false
+        },
+        {
+          "text": "Southampton",
+          "points": 2,
+          "revealed": false
+        }
+      ],
+      "strikes": [
+        0,
+        0
+      ],
+      "roundScores": [
+        0,
+        0
+      ],
+      "bonusAnswerIndex": null
+    }
+  ]
+}
