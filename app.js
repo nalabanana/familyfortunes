@@ -10,11 +10,6 @@ const state = {
   currentRoundIndex: 0
 };
 
-const sounds = {
-  correct: new Audio("correct.mp3"),
-  incorrect: new Audio("incorrect.mp3")
-};
-
 const el = {
   setupPanel: document.getElementById("setup-panel"),
   playPanel: document.getElementById("play-panel"),
@@ -34,33 +29,12 @@ const el = {
   questionText: document.getElementById("question-text"),
   answersBoard: document.getElementById("answers-board"),
   teamsList: document.getElementById("teams-list"),
-  incorrectControls: document.getElementById("incorrect-controls"),
-  winnerBanner: document.getElementById("winner-banner"),
   backToEditBtn: document.getElementById("back-to-edit-btn"),
   resetScoresBtn: document.getElementById("reset-scores-btn")
 };
 
-function playSound(sound) {
-  sound.currentTime = 0;
-  sound.play().catch(() => {});
-}
-
-function createRound(question = "", answers = [{ text: "", points: 0, revealed: false }], strikes = []) {
-  return {
-    question,
-    answers: answers.map((a) => ({ ...a, revealed: !!a.revealed })),
-    strikes: [...strikes]
-  };
-}
-
-function ensureRoundStrikeData(round) {
-  if (!Array.isArray(round.strikes)) {
-    round.strikes = [];
-  }
-  while (round.strikes.length < state.game.teams.length) {
-    round.strikes.push(0);
-  }
-  round.strikes = round.strikes.slice(0, state.game.teams.length).map((n) => Math.max(0, Number(n) || 0));
+function createRound(question = "", answers = [{ text: "", points: 0, revealed: false }]) {
+  return { question, answers: answers.map((a) => ({ ...a, revealed: !!a.revealed })) };
 }
 
 function addRound(round = createRound()) {
@@ -83,32 +57,38 @@ function renderRoundEditors() {
 
     const answersEditor = roundNode.querySelector(".answers-editor");
 
-    state.game.rounds[roundIndex].answers.forEach((answer, answerIndex) => {
-      const answerNode = el.answerEditorTemplate.content.firstElementChild.cloneNode(true);
-      const textInput = answerNode.querySelector(".answer-text");
-      const pointsInput = answerNode.querySelector(".answer-points");
+    const renderAnswers = () => {
+      answersEditor.innerHTML = "";
 
-      textInput.value = answer.text;
-      pointsInput.value = answer.points;
+      state.game.rounds[roundIndex].answers.forEach((answer, answerIndex) => {
+        const answerNode = el.answerEditorTemplate.content.firstElementChild.cloneNode(true);
+        const textInput = answerNode.querySelector(".answer-text");
+        const pointsInput = answerNode.querySelector(".answer-points");
 
-      textInput.addEventListener("input", (event) => {
-        state.game.rounds[roundIndex].answers[answerIndex].text = event.target.value;
+        textInput.value = answer.text;
+        pointsInput.value = answer.points;
+
+        textInput.addEventListener("input", (event) => {
+          state.game.rounds[roundIndex].answers[answerIndex].text = event.target.value;
+        });
+
+        pointsInput.addEventListener("input", (event) => {
+          state.game.rounds[roundIndex].answers[answerIndex].points = Math.max(0, Number(event.target.value) || 0);
+        });
+
+        answerNode.querySelector(".remove-answer-btn").addEventListener("click", () => {
+          state.game.rounds[roundIndex].answers.splice(answerIndex, 1);
+          if (state.game.rounds[roundIndex].answers.length === 0) {
+            state.game.rounds[roundIndex].answers.push({ text: "", points: 0, revealed: false });
+          }
+          renderRoundEditors();
+        });
+
+        answersEditor.appendChild(answerNode);
       });
+    };
 
-      pointsInput.addEventListener("input", (event) => {
-        state.game.rounds[roundIndex].answers[answerIndex].points = Math.max(0, Number(event.target.value) || 0);
-      });
-
-      answerNode.querySelector(".remove-answer-btn").addEventListener("click", () => {
-        state.game.rounds[roundIndex].answers.splice(answerIndex, 1);
-        if (state.game.rounds[roundIndex].answers.length === 0) {
-          state.game.rounds[roundIndex].answers.push({ text: "", points: 0, revealed: false });
-        }
-        renderRoundEditors();
-      });
-
-      answersEditor.appendChild(answerNode);
-    });
+    renderAnswers();
 
     roundNode.querySelector(".add-answer-btn").addEventListener("click", () => {
       state.game.rounds[roundIndex].answers.push({ text: "", points: 0, revealed: false });
@@ -156,8 +136,7 @@ function sanitizeGame() {
           points: Math.max(0, Number(answer.points) || 0),
           revealed: false
         }))
-        .filter((answer) => answer.text),
-      strikes: Array.isArray(round.strikes) ? round.strikes : []
+        .filter((answer) => answer.text)
     }))
     .filter((round) => round.question && round.answers.length > 0);
 
@@ -165,40 +144,15 @@ function sanitizeGame() {
     state.game.rounds.push(createRound("Sample question", [{ text: "Sample answer", points: 10, revealed: false }]));
   }
 
-  state.game.rounds.forEach(ensureRoundStrikeData);
   state.currentRoundIndex = Math.min(state.currentRoundIndex, state.game.rounds.length - 1);
-}
-
-function getWinner() {
-  if (!state.game.teams.length) return null;
-  const ordered = [...state.game.teams].sort((a, b) => b.score - a.score);
-  return ordered[0];
-}
-
-function renderWinnerBanner() {
-  const isFinalRound = state.currentRoundIndex === state.game.rounds.length - 1;
-  if (!isFinalRound) {
-    el.winnerBanner.classList.add("hidden");
-    return;
-  }
-
-  const winner = getWinner();
-  if (!winner) {
-    el.winnerBanner.classList.add("hidden");
-    return;
-  }
-
-  el.winnerBanner.classList.remove("hidden");
-  el.winnerBanner.textContent = `Winning team: ${winner.name} with ${winner.score} points`;
 }
 
 function renderPlayView() {
   const round = state.game.rounds[state.currentRoundIndex];
-  ensureRoundStrikeData(round);
 
   el.playTitle.textContent = state.game.title;
   el.roundIndicator.textContent = `Round ${state.currentRoundIndex + 1} of ${state.game.rounds.length}`;
-  el.questionText.textContent = `We asked 100 people... ${round.question}`;
+  el.questionText.textContent = round.question;
 
   el.prevRoundBtn.disabled = state.currentRoundIndex <= 0;
   el.nextRoundBtn.disabled = state.currentRoundIndex >= state.game.rounds.length - 1;
@@ -221,9 +175,6 @@ function renderPlayView() {
     revealBtn.className = "tiny";
     revealBtn.textContent = answer.revealed ? "Hide" : "Reveal";
     revealBtn.addEventListener("click", () => {
-      if (!answer.revealed) {
-        playSound(sounds.correct);
-      }
       answer.revealed = !answer.revealed;
       renderPlayView();
     });
@@ -236,7 +187,6 @@ function renderPlayView() {
         addBtn.textContent = `+${answer.points} ${team.name}`;
         addBtn.addEventListener("click", () => {
           state.game.teams[teamIndex].score += answer.points;
-          playSound(sounds.correct);
           renderPlayView();
         });
         controls.appendChild(addBtn);
@@ -247,29 +197,15 @@ function renderPlayView() {
     el.answersBoard.appendChild(tile);
   });
 
-  el.incorrectControls.innerHTML = "";
-  state.game.teams.forEach((team, teamIndex) => {
-    const btn = document.createElement("button");
-    btn.className = "tiny danger";
-    btn.textContent = `Add ❌ ${team.name}`;
-    btn.addEventListener("click", () => {
-      round.strikes[teamIndex] += 1;
-      playSound(sounds.incorrect);
-      renderPlayView();
-    });
-    el.incorrectControls.appendChild(btn);
-  });
-
   el.teamsList.innerHTML = "";
-  state.game.teams.forEach((team, teamIndex) => {
-    const row = document.createElement("div");
-    row.className = "team-row";
-    const crosses = "❌".repeat(Math.min(round.strikes[teamIndex], 3));
-    row.innerHTML = `<strong>${team.name}</strong><span>${team.score} pts</span><span class="strike-display">${crosses || "—"}</span>`;
-    el.teamsList.appendChild(row);
-  });
-
-  renderWinnerBanner();
+  [...state.game.teams]
+    .sort((a, b) => b.score - a.score)
+    .forEach((team) => {
+      const row = document.createElement("div");
+      row.className = "team-row";
+      row.innerHTML = `<strong>${team.name}</strong><span>${team.score} pts</span>`;
+      el.teamsList.appendChild(row);
+    });
 }
 
 function switchToPlay() {
@@ -312,24 +248,22 @@ function loadGameFile(file) {
         teams: Array.isArray(loaded.teams) && loaded.teams.length
           ? loaded.teams.map((team) => ({ name: String(team.name || "Team"), score: Number(team.score) || 0 }))
           : [{ name: "Team A", score: 0 }, { name: "Team B", score: 0 }],
-        rounds: loaded.rounds.map((round) => createRound(
-          String(round.question || ""),
-          Array.isArray(round.answers)
+        rounds: loaded.rounds.map((round) => ({
+          question: String(round.question || ""),
+          answers: Array.isArray(round.answers)
             ? round.answers.map((answer) => ({
                 text: String(answer.text || ""),
                 points: Math.max(0, Number(answer.points) || 0),
                 revealed: false
               }))
-            : [],
-          Array.isArray(round.strikes) ? round.strikes : []
-        ))
+            : []
+        }))
       };
 
       if (state.game.rounds.length === 0) {
         state.game.rounds.push(createRound());
       }
 
-      state.game.rounds.forEach(ensureRoundStrikeData);
       state.currentRoundIndex = 0;
       el.gameTitle.value = state.game.title;
       el.teamNames.value = state.game.teams.map((team) => team.name).join(", ");
@@ -352,7 +286,6 @@ function resetScores() {
     round.answers.forEach((answer) => {
       answer.revealed = false;
     });
-    round.strikes = round.strikes.map(() => 0);
   });
 
   renderPlayView();

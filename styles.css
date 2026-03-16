@@ -175,29 +175,10 @@ button:hover,
 }
 
 .team-row {
-  display: grid;
-  grid-template-columns: 1fr auto auto;
-  gap: 0.8rem;
-  align-items: center;
+  display: flex;
+  justify-content: space-between;
   border-bottom: 1px dashed #374151;
   padding: 0.35rem 0;
-}
-
-.strike-display {
-  color: #ef4444;
-  font-weight: 700;
-  min-width: 3rem;
-  text-align: right;
-}
-
-.winner-banner {
-  background: #14532d;
-  color: #dcfce7;
-  border: 1px solid #22c55e;
-  border-radius: 10px;
-  padding: 0.7rem;
-  font-weight: 700;
-  text-align: center;
 }
 
 @media (max-width: 700px) {
@@ -207,14 +188,5 @@ button:hover,
 
   .answer-tile {
     grid-template-columns: 1fr;
-  }
-
-  .team-row {
-    grid-template-columns: 1fr;
-    gap: 0.2rem;
-  }
-
-  .strike-display {
-    text-align: left;
   }
 }
