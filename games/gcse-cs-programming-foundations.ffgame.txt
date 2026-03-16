@@ -1,0 +1,73 @@
+{
+  "title": "GCSE Computer Science - Programming Foundations",
+  "options": {
+    "randomRoundOrder": false,
+    "themeMusic": true
+  },
+  "teams": [
+    { "name": "Team A", "score": 0 },
+    { "name": "Team B", "score": 0 }
+  ],
+  "rounds": [
+    {
+      "question": "Name a standard programming construct",
+      "answers": [
+        { "text": "Sequence", "points": 34, "revealed": false },
+        { "text": "Selection", "points": 28, "revealed": false },
+        { "text": "Iteration", "points": 24, "revealed": false },
+        { "text": "Subroutine", "points": 8, "revealed": false },
+        { "text": "Recursion", "points": 6, "revealed": false }
+      ],
+      "strikes": [0, 0],
+      "roundScores": [0, 0]
+    },
+    {
+      "question": "Name a common data type",
+      "answers": [
+        { "text": "Integer", "points": 30, "revealed": false },
+        { "text": "String", "points": 24, "revealed": false },
+        { "text": "Boolean", "points": 20, "revealed": false },
+        { "text": "Real / Float", "points": 16, "revealed": false },
+        { "text": "Character", "points": 10, "revealed": false }
+      ],
+      "strikes": [0, 0],
+      "roundScores": [0, 0]
+    },
+    {
+      "question": "Name a thing a programmer might use to repeat code",
+      "answers": [
+        { "text": "For loop", "points": 31, "revealed": false },
+        { "text": "While loop", "points": 27, "revealed": false },
+        { "text": "Repeat-until loop", "points": 19, "revealed": false },
+        { "text": "Procedure", "points": 13, "revealed": false },
+        { "text": "Function", "points": 10, "revealed": false }
+      ],
+      "strikes": [0, 0],
+      "roundScores": [0, 0]
+    },
+    {
+      "question": "Name something used to debug a program",
+      "answers": [
+        { "text": "Test data", "points": 30, "revealed": false },
+        { "text": "Breakpoints", "points": 24, "revealed": false },
+        { "text": "Trace table", "points": 20, "revealed": false },
+        { "text": "Step-through execution", "points": 16, "revealed": false },
+        { "text": "Print statement", "points": 10, "revealed": false }
+      ],
+      "strikes": [0, 0],
+      "roundScores": [0, 0]
+    },
+    {
+      "question": "Name a way to store multiple related values",
+      "answers": [
+        { "text": "Array", "points": 40, "revealed": false },
+        { "text": "Record", "points": 22, "revealed": false },
+        { "text": "List", "points": 18, "revealed": false },
+        { "text": "Tuple", "points": 10, "revealed": false },
+        { "text": "Dictionary", "points": 10, "revealed": false }
+      ],
+      "strikes": [0, 0],
+      "roundScores": [0, 0]
+    }
+  ]
+}
