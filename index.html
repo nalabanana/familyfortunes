@@ -15,11 +15,21 @@
 
       <h2>Game Setup</h2>
 
+      <div class="actions-row setup-actions-row">
+        <label class="file-label" for="load-game-input">Open Game File</label>
+        <button id="save-game-btn" type="button">Save Game File</button>
+        <a id="games-library-link" class="file-label" href="https://github.com/nalabanana/familyfortunes/tree/main/games" target="_blank" rel="noopener noreferrer">Games Library</a>
+        <input id="load-game-input" type="file" accept=".txt,.json,.ffgame" />
+      </div>
+
       <label for="game-title">Game Title</label>
       <input id="game-title" type="text" placeholder="e.g. Year 5 Friday Quiz" />
 
-      <label for="team-names">Team Names (comma separated)</label>
-      <input id="team-names" type="text" placeholder="Red Team, Blue Team" />
+      <label for="team-name-1">Team 1 Name</label>
+      <input id="team-name-1" type="text" placeholder="e.g. Red Team" />
+
+      <label for="team-name-2">Team 2 Name</label>
+      <input id="team-name-2" type="text" placeholder="e.g. Blue Team" />
 
       <section class="options-panel">
         <h3>Options</h3>
@@ -36,18 +46,6 @@
           <label><input type="radio" name="theme-music" id="theme-music-off" value="off" /> Off</label>
         </div>
       </section>
-
-      <div class="actions-row setup-actions-row">
-        <button id="save-game-btn" type="button">Open Game File</button>
-        <label class="file-label" for="load-game-input">Load Game File</label>
-        <input id="load-game-input" type="file" accept=".txt,.json,.ffgame" />
-        <a id="games-library-link" class="file-label" href="games/" target="_blank" rel="noopener noreferrer">Games Library</a>
-      </div>
-
-      <div class="actions-row setup-actions-row">
-        <input id="game-url-input" type="text" placeholder="https://example.com/my-game.ffgame.txt" />
-        <button id="load-url-btn" type="button">Open Game File by URL</button>
-      </div>
 
       <div class="actions-row">
         <button id="download-sheet-btn" type="button">Download Printable Answer Sheet</button>
