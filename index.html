@@ -18,17 +18,35 @@
       <label for="game-title">Game Title</label>
       <input id="game-title" type="text" placeholder="e.g. Year 5 Friday Quiz" />
 
-      <label for="topic-name">Topic Name</label>
-      <input id="topic-name" type="text" placeholder="e.g. Space, Fractions, Shakespeare" />
-
       <label for="team-names">Team Names (comma separated)</label>
       <input id="team-names" type="text" placeholder="Red Team, Blue Team" />
+
+      <section class="options-panel">
+        <h3>Options</h3>
+
+        <div class="option-row">
+          <p>Random Round Order</p>
+          <label><input type="radio" name="random-order" id="random-order-on" value="on" /> On</label>
+          <label><input type="radio" name="random-order" id="random-order-off" value="off" checked /> Off</label>
+        </div>
+
+        <div class="option-row">
+          <p>Theme Music</p>
+          <label><input type="radio" name="theme-music" id="theme-music-on" value="on" checked /> On</label>
+          <label><input type="radio" name="theme-music" id="theme-music-off" value="off" /> Off</label>
+        </div>
+      </section>
 
       <div class="actions-row setup-actions-row">
         <button id="save-game-btn" type="button">Open Game File</button>
         <label class="file-label" for="load-game-input">Load Game File</label>
         <input id="load-game-input" type="file" accept=".txt,.json,.ffgame" />
-        <button id="randomize-rounds-btn" type="button">Randomise Round Order</button>
+        <a id="games-library-link" class="file-label" href="games/" target="_blank" rel="noopener noreferrer">Games Library</a>
+      </div>
+
+      <div class="actions-row setup-actions-row">
+        <input id="game-url-input" type="text" placeholder="https://example.com/my-game.ffgame.txt" />
+        <button id="load-url-btn" type="button">Open Game File by URL</button>
       </div>
 
       <div class="actions-row">
