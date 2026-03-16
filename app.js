@@ -1,7 +1,10 @@
 const state = {
   game: {
     title: "",
-    topic: "",
+    options: {
+      randomRoundOrder: false,
+      themeMusic: true
+    },
     teams: [
       { name: "Team A", score: 0 },
       { name: "Team B", score: 0 }
@@ -22,10 +25,14 @@ const el = {
   setupPanel: document.getElementById("setup-panel"),
   playPanel: document.getElementById("play-panel"),
   gameTitle: document.getElementById("game-title"),
-  topicName: document.getElementById("topic-name"),
   teamNames: document.getElementById("team-names"),
+  randomOrderOn: document.getElementById("random-order-on"),
+  randomOrderOff: document.getElementById("random-order-off"),
+  themeMusicOn: document.getElementById("theme-music-on"),
+  themeMusicOff: document.getElementById("theme-music-off"),
+  gameUrlInput: document.getElementById("game-url-input"),
+  loadUrlBtn: document.getElementById("load-url-btn"),
   addRoundBtn: document.getElementById("add-round-btn"),
-  randomizeRoundsBtn: document.getElementById("randomize-rounds-btn"),
   startGameBtn: document.getElementById("start-game-btn"),
   saveGameBtn: document.getElementById("save-game-btn"),
   downloadSheetBtn: document.getElementById("download-sheet-btn"),
@@ -82,7 +89,6 @@ function shuffleRounds() {
     const j = Math.floor(Math.random() * (i + 1));
     [state.game.rounds[i], state.game.rounds[j]] = [state.game.rounds[j], state.game.rounds[i]];
   }
-  renderRoundEditors();
 }
 
 function renderRoundEditors() {
@@ -160,10 +166,22 @@ function parseTeamsFromInput() {
   return raw.map((name) => ({ name, score: 0 }));
 }
 
+function syncOptionsFromInputs() {
+  state.game.options.randomRoundOrder = el.randomOrderOn.checked;
+  state.game.options.themeMusic = el.themeMusicOn.checked;
+}
+
+function syncInputsFromOptions() {
+  el.randomOrderOn.checked = !!state.game.options.randomRoundOrder;
+  el.randomOrderOff.checked = !state.game.options.randomRoundOrder;
+  el.themeMusicOn.checked = !!state.game.options.themeMusic;
+  el.themeMusicOff.checked = !state.game.options.themeMusic;
+}
+
 function sanitizeGame() {
   state.game.title = el.gameTitle.value.trim() || "Family Fortunes Game";
-  state.game.topic = el.topicName.value.trim() || "General";
   state.game.teams = parseTeamsFromInput();
+  syncOptionsFromInputs();
 
   state.game.rounds = state.game.rounds
     .map((round) => ({
@@ -304,8 +322,13 @@ function renderPlayView() {
 
 function switchToPlay() {
   sanitizeGame();
+  if (state.game.options.randomRoundOrder) {
+    shuffleRounds();
+  }
   state.gameEnded = false;
-  playSound(sounds.theme);
+  if (state.game.options.themeMusic) {
+    playSound(sounds.theme);
+  }
   el.setupPanel.classList.add("hidden");
   el.playPanel.classList.remove("hidden");
   renderPlayView();
@@ -325,7 +348,7 @@ function buildPrintableSheet() {
     return `<section><h2>Round ${index + 1}</h2><p><strong>Question:</strong> ${round.question}</p><ol>${answers}</ol></section>`;
   }).join("");
 
-  return `<!doctype html><html><head><meta charset="utf-8"><title>${state.game.title} - ${state.game.topic} - Answer Sheet</title><style>body{font-family:Arial,sans-serif;padding:24px;}h1,h2{margin-bottom:8px;}section{margin-bottom:16px;border-bottom:1px solid #ccc;padding-bottom:10px;}li{margin:4px 0;}</style></head><body><h1>${state.game.title} - Printable Answer Sheet</h1><p><strong>Topic:</strong> ${state.game.topic}</p>${roundsHtml}</body></html>`;
+  return `<!doctype html><html><head><meta charset="utf-8"><title>${state.game.title} - Answer Sheet</title><style>body{font-family:Arial,sans-serif;padding:24px;}h1,h2{margin-bottom:8px;}section{margin-bottom:16px;border-bottom:1px solid #ccc;padding-bottom:10px;}li{margin:4px 0;}</style></head><body><h1>${state.game.title} - Printable Answer Sheet</h1>${roundsHtml}</body></html>`;
 }
 
 function downloadPrintableSheet() {
@@ -334,9 +357,8 @@ function downloadPrintableSheet() {
   const url = URL.createObjectURL(blob);
   const link = document.createElement("a");
   const safeTitle = (state.game.title || "family-fortunes").replace(/[^a-z0-9]+/gi, "-").toLowerCase();
-  const safeTopic = (state.game.topic || "general").replace(/[^a-z0-9]+/gi, "-").toLowerCase();
   link.href = url;
-  link.download = `${safeTitle}-${safeTopic}-answer-sheet.html`;
+  link.download = `${safeTitle}-answer-sheet.html`;
   link.click();
   URL.revokeObjectURL(url);
 }
@@ -347,11 +369,55 @@ function downloadGameFile() {
   const url = URL.createObjectURL(blob);
   const link = document.createElement("a");
   const safeTitle = (state.game.title || "family-fortunes-game").replace(/[^a-z0-9]+/gi, "-").toLowerCase();
-  const safeTopic = (state.game.topic || "general").replace(/[^a-z0-9]+/gi, "-").toLowerCase();
   link.href = url;
-  link.download = `${safeTitle}-${safeTopic}.ffgame.txt`;
+  link.download = `${safeTitle}.ffgame.txt`;
   link.click();
   URL.revokeObjectURL(url);
+}
+
+function applyLoadedGame(loaded) {
+  state.game = {
+    title: String(loaded.title || "Family Fortunes Game"),
+    options: {
+      randomRoundOrder: Boolean(loaded.options?.randomRoundOrder),
+      themeMusic: loaded.options?.themeMusic !== false
+    },
+    teams: Array.isArray(loaded.teams) && loaded.teams.length
+      ? loaded.teams.map((team) => ({ name: String(team.name || "Team"), score: Number(team.score) || 0 }))
+      : [{ name: "Team A", score: 0 }, { name: "Team B", score: 0 }],
+    rounds: loaded.rounds.map((round) => createRound(
+      String(round.question || ""),
+      Array.isArray(round.answers)
+        ? round.answers.map((answer) => ({
+            text: String(answer.text || ""),
+            points: Math.max(0, Number(answer.points) || 0),
+            revealed: false
+          }))
+        : [],
+      Array.isArray(round.strikes) ? round.strikes : [],
+      Array.isArray(round.roundScores) ? round.roundScores : []
+    ))
+  };
+
+  if (state.game.rounds.length === 0) {
+    state.game.rounds.push(createRound());
+  }
+
+  state.gameEnded = false;
+  state.game.rounds.forEach(ensureRoundTeamData);
+  state.currentRoundIndex = 0;
+  el.gameTitle.value = state.game.title;
+  el.teamNames.value = state.game.teams.map((team) => team.name).join(", ");
+  syncInputsFromOptions();
+  renderRoundEditors();
+}
+
+function loadGameFromString(rawText) {
+  const loaded = JSON.parse(String(rawText));
+  if (!loaded || !Array.isArray(loaded.rounds)) {
+    throw new Error("Invalid game file format");
+  }
+  applyLoadedGame(loaded);
 }
 
 function loadGameFile(file) {
@@ -360,42 +426,7 @@ function loadGameFile(file) {
   const reader = new FileReader();
   reader.onload = () => {
     try {
-      const loaded = JSON.parse(String(reader.result));
-      if (!loaded || !Array.isArray(loaded.rounds)) {
-        throw new Error("Invalid game file format");
-      }
-
-      state.game = {
-        title: String(loaded.title || "Family Fortunes Game"),
-        topic: String(loaded.topic || "General"),
-        teams: Array.isArray(loaded.teams) && loaded.teams.length
-          ? loaded.teams.map((team) => ({ name: String(team.name || "Team"), score: Number(team.score) || 0 }))
-          : [{ name: "Team A", score: 0 }, { name: "Team B", score: 0 }],
-        rounds: loaded.rounds.map((round) => createRound(
-          String(round.question || ""),
-          Array.isArray(round.answers)
-            ? round.answers.map((answer) => ({
-                text: String(answer.text || ""),
-                points: Math.max(0, Number(answer.points) || 0),
-                revealed: false
-              }))
-            : [],
-          Array.isArray(round.strikes) ? round.strikes : [],
-          Array.isArray(round.roundScores) ? round.roundScores : []
-        ))
-      };
-
-      if (state.game.rounds.length === 0) {
-        state.game.rounds.push(createRound());
-      }
-
-      state.gameEnded = false;
-      state.game.rounds.forEach(ensureRoundTeamData);
-      state.currentRoundIndex = 0;
-      el.gameTitle.value = state.game.title;
-      el.topicName.value = state.game.topic;
-      el.teamNames.value = state.game.teams.map((team) => team.name).join(", ");
-      renderRoundEditors();
+      loadGameFromString(reader.result);
       alert("Game file loaded.");
     } catch (error) {
       alert(`Could not load file: ${error.message}`);
@@ -403,6 +434,26 @@ function loadGameFile(file) {
   };
 
   reader.readAsText(file);
+}
+
+async function loadGameFromUrl() {
+  const url = el.gameUrlInput.value.trim();
+  if (!url) {
+    alert("Please enter a URL for the game file.");
+    return;
+  }
+
+  try {
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}`);
+    }
+    const text = await response.text();
+    loadGameFromString(text);
+    alert("Game file loaded from URL.");
+  } catch (error) {
+    alert(`Could not load URL game file: ${error.message}`);
+  }
 }
 
 function resetScores() {
@@ -423,12 +474,12 @@ function resetScores() {
 }
 
 el.addRoundBtn.addEventListener("click", () => addRound());
-el.randomizeRoundsBtn.addEventListener("click", shuffleRounds);
 el.startGameBtn.addEventListener("click", switchToPlay);
 el.backToEditBtn.addEventListener("click", switchToSetup);
 el.saveGameBtn.addEventListener("click", downloadGameFile);
 el.downloadSheetBtn.addEventListener("click", downloadPrintableSheet);
 el.loadGameInput.addEventListener("change", (event) => loadGameFile(event.target.files[0]));
+el.loadUrlBtn.addEventListener("click", loadGameFromUrl);
 
 el.prevRoundBtn.addEventListener("click", () => {
   state.currentRoundIndex = Math.max(0, state.currentRoundIndex - 1);
@@ -450,8 +501,8 @@ el.nextRoundBtn.addEventListener("click", () => {
 el.resetScoresBtn.addEventListener("click", resetScores);
 
 el.gameTitle.value = "Family Fortunes Classroom";
-el.topicName.value = "General Knowledge";
 el.teamNames.value = "Team A, Team B";
+syncInputsFromOptions();
 addRound(
   createRound("Name something you bring to school every day", [
     { text: "Backpack", points: 30, revealed: false },
