@@ -1,11 +1,8 @@
 :root {
-  --bg: #0f172a;
   --panel: #111827;
-  --card: #1f2937;
   --text: #e5e7eb;
   --accent: #f59e0b;
   --accent-2: #f97316;
-  --danger: #ef4444;
 }
 
 * {
@@ -20,13 +17,8 @@ body {
   min-height: 100vh;
 }
 
-header {
-  text-align: center;
-  padding: 1rem;
-}
-
 main {
-  max-width: 1100px;
+  max-width: 1200px;
   margin: 0 auto;
   padding: 1rem;
 }
@@ -119,6 +111,17 @@ button:hover,
   color: #fee2e2;
 }
 
+.play-layout {
+  display: grid;
+  grid-template-columns: minmax(170px, 220px) 1fr minmax(170px, 220px);
+  gap: 0.8rem;
+  align-items: start;
+}
+
+.center-board {
+  min-width: 0;
+}
+
 .round-header {
   display: flex;
   justify-content: space-between;
@@ -163,31 +166,41 @@ button:hover,
   justify-content: flex-end;
 }
 
+.team-side-card {
+  border: 1px solid #4b5563;
+  border-radius: 10px;
+  background: #0b1220;
+  padding: 0.7rem;
+  text-align: center;
+}
+
+.team-side-card h4 {
+  margin: 0 0 0.5rem;
+}
+
+.team-side-card p {
+  margin: 0.3rem 0;
+}
+
+.team-side-card.empty {
+  color: #9ca3af;
+}
+
+.strike-stack {
+  margin-top: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  align-items: center;
+  color: #ef4444;
+  font-size: 1.1rem;
+  font-weight: 700;
+  min-height: 2rem;
+}
+
 .tiny {
   padding: 0.3rem 0.5rem;
   font-size: 0.85rem;
-}
-
-.scoreboard {
-  margin-top: 1rem;
-  border-top: 1px solid #374151;
-  padding-top: 0.8rem;
-}
-
-.team-row {
-  display: grid;
-  grid-template-columns: 1fr auto auto;
-  gap: 0.8rem;
-  align-items: center;
-  border-bottom: 1px dashed #374151;
-  padding: 0.35rem 0;
-}
-
-.strike-display {
-  color: #ef4444;
-  font-weight: 700;
-  min-width: 3rem;
-  text-align: right;
 }
 
 .winner-banner {
@@ -200,21 +213,23 @@ button:hover,
   text-align: center;
 }
 
-@media (max-width: 700px) {
-  .answer-row {
+@media (max-width: 900px) {
+  .play-layout {
     grid-template-columns: 1fr;
   }
 
+  .team-side {
+    order: 2;
+  }
+
+  .center-board {
+    order: 1;
+  }
+}
+
+@media (max-width: 700px) {
+  .answer-row,
   .answer-tile {
     grid-template-columns: 1fr;
-  }
-
-  .team-row {
-    grid-template-columns: 1fr;
-    gap: 0.2rem;
-  }
-
-  .strike-display {
-    text-align: left;
   }
 }
