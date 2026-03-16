@@ -80,7 +80,7 @@ button:hover,
 
 .setup-top-row {
   display: flex;
-  justify-content: flex-start;
+  justify-content: flex-end;
   margin-bottom: 0.6rem;
 }
 
@@ -259,4 +259,9 @@ button:hover,
   .answer-tile {
     grid-template-columns: 1fr;
   }
+}
+
+
+.bottom-add-row {
+  justify-content: center;
 }
