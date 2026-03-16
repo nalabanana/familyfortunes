@@ -7,11 +7,6 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <header>
-    <h1>Family Fortunes Classroom Game</h1>
-    <p>Create rounds, save/load games, and reveal answers while keeping score.</p>
-  </header>
-
   <main>
     <section class="panel" id="setup-panel">
       <h2>Game Setup</h2>
@@ -38,24 +33,28 @@
 
     <section class="panel hidden" id="play-panel">
       <h2 id="play-title">Game in Play</h2>
-      <div class="round-header">
-        <button id="prev-round-btn" type="button">Previous Round</button>
-        <p id="round-indicator"></p>
-        <button id="next-round-btn" type="button">Next Round</button>
+
+      <div class="play-layout">
+        <aside id="left-team-display" class="team-side"></aside>
+
+        <section class="center-board">
+          <div class="round-header">
+            <button id="prev-round-btn" type="button">Previous Round</button>
+            <p id="round-indicator"></p>
+            <button id="next-round-btn" type="button">Next Round</button>
+          </div>
+
+          <div class="question-card">
+            <h3 id="question-text"></h3>
+          </div>
+
+          <div id="answers-board"></div>
+        </section>
+
+        <aside id="right-team-display" class="team-side"></aside>
       </div>
 
-      <div class="question-card">
-        <h3 id="question-text"></h3>
-      </div>
-
-      <div id="answers-board"></div>
-
-      <section class="scoreboard">
-        <h3>Scoreboard</h3>
-        <div id="incorrect-controls" class="actions-row"></div>
-        <div id="teams-list"></div>
-      </section>
-
+      <div id="incorrect-controls" class="actions-row"></div>
       <p id="winner-banner" class="winner-banner hidden"></p>
 
       <div class="actions-row">
