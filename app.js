@@ -32,6 +32,8 @@ const el = {
   themeMusicOn: document.getElementById("theme-music-on"),
   themeMusicOff: document.getElementById("theme-music-off"),
   addRoundBtn: document.getElementById("add-round-btn"),
+  openGameBtn: document.getElementById("open-game-btn"),
+  gamesLibraryBtn: document.getElementById("games-library-btn"),
   startGameBtn: document.getElementById("start-game-btn"),
   saveGameBtn: document.getElementById("save-game-btn"),
   downloadSheetBtn: document.getElementById("download-sheet-btn"),
@@ -448,6 +450,10 @@ function resetScores() {
 }
 
 el.addRoundBtn.addEventListener("click", () => addRound());
+el.openGameBtn.addEventListener("click", () => el.loadGameInput.click());
+el.gamesLibraryBtn.addEventListener("click", () => {
+  window.open("https://github.com/nalabanana/familyfortunes/tree/main/games", "_blank", "noopener,noreferrer");
+});
 el.startGameBtn.addEventListener("click", switchToPlay);
 el.backToEditBtn.addEventListener("click", switchToSetup);
 el.saveGameBtn.addEventListener("click", downloadGameFile);
