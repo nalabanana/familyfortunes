@@ -159,6 +159,10 @@ button:hover,
   margin-top: 0.5rem;
 }
 
+.add-answer-btn {
+  margin-top: 0.75rem;
+}
+
 .remove-answer-btn,
 .remove-round-btn,
 .danger {
