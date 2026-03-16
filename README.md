@@ -20,6 +20,11 @@ A self-contained browser game inspired by TV's **Family Fortunes** for classroom
 - Open a full game file (`.ffgame.txt`) from disk and save game files locally.
 - Quick link to the online preset games library.
 - Includes a `games/` library with preset GCSE Computer Science sample game files.
+- Each round has one survey-style question and multiple answers with point values.
+- Reveal answers live during play as the teacher hosts the game.
+- Keep team scores throughout all rounds.
+- Save a full game to a local text file (`.ffgame.txt`).
+- Load a previously saved game file from local disk.
 
 ## Run locally
 
@@ -30,6 +35,9 @@ No installation required.
 3. Open `index.html` in any modern browser.
 4. Use the setup panel to edit rounds and teams.
 5. Click **Start Game** to switch to host/play mode.
+2. Open `index.html` in any modern browser.
+3. Use the setup panel to edit rounds and teams.
+4. Click **Start Game** to switch to host/play mode.
 
 ## Save / Load format
 
@@ -40,3 +48,5 @@ They include:
 - options (random order/theme music)
 - teams and scores
 - rounds with questions, answers, per-team strike counts, and per-round team scores
+- teams and scores
+- rounds with questions and answers
