@@ -1,6 +1,7 @@
 const state = {
   game: {
     title: "",
+    topic: "",
     teams: [
       { name: "Team A", score: 0 },
       { name: "Team B", score: 0 }
@@ -21,8 +22,10 @@ const el = {
   setupPanel: document.getElementById("setup-panel"),
   playPanel: document.getElementById("play-panel"),
   gameTitle: document.getElementById("game-title"),
+  topicName: document.getElementById("topic-name"),
   teamNames: document.getElementById("team-names"),
   addRoundBtn: document.getElementById("add-round-btn"),
+  randomizeRoundsBtn: document.getElementById("randomize-rounds-btn"),
   startGameBtn: document.getElementById("start-game-btn"),
   saveGameBtn: document.getElementById("save-game-btn"),
   downloadSheetBtn: document.getElementById("download-sheet-btn"),
@@ -71,6 +74,14 @@ function ensureRoundTeamData(round) {
 
 function addRound(round = createRound()) {
   state.game.rounds.push(round);
+  renderRoundEditors();
+}
+
+function shuffleRounds() {
+  for (let i = state.game.rounds.length - 1; i > 0; i -= 1) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [state.game.rounds[i], state.game.rounds[j]] = [state.game.rounds[j], state.game.rounds[i]];
+  }
   renderRoundEditors();
 }
 
@@ -151,6 +162,7 @@ function parseTeamsFromInput() {
 
 function sanitizeGame() {
   state.game.title = el.gameTitle.value.trim() || "Family Fortunes Game";
+  state.game.topic = el.topicName.value.trim() || "General";
   state.game.teams = parseTeamsFromInput();
 
   state.game.rounds = state.game.rounds
@@ -313,7 +325,7 @@ function buildPrintableSheet() {
     return `<section><h2>Round ${index + 1}</h2><p><strong>Question:</strong> ${round.question}</p><ol>${answers}</ol></section>`;
   }).join("");
 
-  return `<!doctype html><html><head><meta charset="utf-8"><title>${state.game.title} - Answer Sheet</title><style>body{font-family:Arial,sans-serif;padding:24px;}h1,h2{margin-bottom:8px;}section{margin-bottom:16px;border-bottom:1px solid #ccc;padding-bottom:10px;}li{margin:4px 0;}</style></head><body><h1>${state.game.title} - Printable Answer Sheet</h1>${roundsHtml}</body></html>`;
+  return `<!doctype html><html><head><meta charset="utf-8"><title>${state.game.title} - ${state.game.topic} - Answer Sheet</title><style>body{font-family:Arial,sans-serif;padding:24px;}h1,h2{margin-bottom:8px;}section{margin-bottom:16px;border-bottom:1px solid #ccc;padding-bottom:10px;}li{margin:4px 0;}</style></head><body><h1>${state.game.title} - Printable Answer Sheet</h1><p><strong>Topic:</strong> ${state.game.topic}</p>${roundsHtml}</body></html>`;
 }
 
 function downloadPrintableSheet() {
@@ -322,8 +334,9 @@ function downloadPrintableSheet() {
   const url = URL.createObjectURL(blob);
   const link = document.createElement("a");
   const safeTitle = (state.game.title || "family-fortunes").replace(/[^a-z0-9]+/gi, "-").toLowerCase();
+  const safeTopic = (state.game.topic || "general").replace(/[^a-z0-9]+/gi, "-").toLowerCase();
   link.href = url;
-  link.download = `${safeTitle}-answer-sheet.html`;
+  link.download = `${safeTitle}-${safeTopic}-answer-sheet.html`;
   link.click();
   URL.revokeObjectURL(url);
 }
@@ -334,8 +347,9 @@ function downloadGameFile() {
   const url = URL.createObjectURL(blob);
   const link = document.createElement("a");
   const safeTitle = (state.game.title || "family-fortunes-game").replace(/[^a-z0-9]+/gi, "-").toLowerCase();
+  const safeTopic = (state.game.topic || "general").replace(/[^a-z0-9]+/gi, "-").toLowerCase();
   link.href = url;
-  link.download = `${safeTitle}.ffgame.txt`;
+  link.download = `${safeTitle}-${safeTopic}.ffgame.txt`;
   link.click();
   URL.revokeObjectURL(url);
 }
@@ -353,6 +367,7 @@ function loadGameFile(file) {
 
       state.game = {
         title: String(loaded.title || "Family Fortunes Game"),
+        topic: String(loaded.topic || "General"),
         teams: Array.isArray(loaded.teams) && loaded.teams.length
           ? loaded.teams.map((team) => ({ name: String(team.name || "Team"), score: Number(team.score) || 0 }))
           : [{ name: "Team A", score: 0 }, { name: "Team B", score: 0 }],
@@ -378,6 +393,7 @@ function loadGameFile(file) {
       state.game.rounds.forEach(ensureRoundTeamData);
       state.currentRoundIndex = 0;
       el.gameTitle.value = state.game.title;
+      el.topicName.value = state.game.topic;
       el.teamNames.value = state.game.teams.map((team) => team.name).join(", ");
       renderRoundEditors();
       alert("Game file loaded.");
@@ -407,6 +423,7 @@ function resetScores() {
 }
 
 el.addRoundBtn.addEventListener("click", () => addRound());
+el.randomizeRoundsBtn.addEventListener("click", shuffleRounds);
 el.startGameBtn.addEventListener("click", switchToPlay);
 el.backToEditBtn.addEventListener("click", switchToSetup);
 el.saveGameBtn.addEventListener("click", downloadGameFile);
@@ -433,6 +450,7 @@ el.nextRoundBtn.addEventListener("click", () => {
 el.resetScoresBtn.addEventListener("click", resetScores);
 
 el.gameTitle.value = "Family Fortunes Classroom";
+el.topicName.value = "General Knowledge";
 el.teamNames.value = "Team A, Team B";
 addRound(
   createRound("Name something you bring to school every day", [
