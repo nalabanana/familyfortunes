@@ -7,7 +7,8 @@ const state = {
     ],
     rounds: []
   },
-  currentRoundIndex: 0
+  currentRoundIndex: 0,
+  gameEnded: false
 };
 
 const sounds = {
@@ -24,6 +25,7 @@ const el = {
   addRoundBtn: document.getElementById("add-round-btn"),
   startGameBtn: document.getElementById("start-game-btn"),
   saveGameBtn: document.getElementById("save-game-btn"),
+  downloadSheetBtn: document.getElementById("download-sheet-btn"),
   loadGameInput: document.getElementById("load-game-input"),
   roundEditorList: document.getElementById("round-editor-list"),
   roundTemplate: document.getElementById("round-template"),
@@ -37,7 +39,7 @@ const el = {
   leftTeamDisplay: document.getElementById("left-team-display"),
   rightTeamDisplay: document.getElementById("right-team-display"),
   incorrectControls: document.getElementById("incorrect-controls"),
-  winnerBanner: document.getElementById("winner-banner"),
+  gameResult: document.getElementById("game-result"),
   backToEditBtn: document.getElementById("back-to-edit-btn"),
   resetScoresBtn: document.getElementById("reset-scores-btn")
 };
@@ -47,12 +49,7 @@ function playSound(sound) {
   sound.play().catch(() => {});
 }
 
-function createRound(
-  question = "",
-  answers = [{ text: "", points: 0, revealed: false }],
-  strikes = [],
-  roundScores = []
-) {
+function createRound(question = "", answers = [{ text: "", points: 0, revealed: false }], strikes = [], roundScores = []) {
   return {
     question,
     answers: answers.map((a) => ({ ...a, revealed: !!a.revealed })),
@@ -179,26 +176,27 @@ function sanitizeGame() {
   state.currentRoundIndex = Math.min(state.currentRoundIndex, state.game.rounds.length - 1);
 }
 
-function getWinner() {
-  if (!state.game.teams.length) return null;
-  return [...state.game.teams].sort((a, b) => b.score - a.score)[0];
+function sortedTeams() {
+  return [...state.game.teams].sort((a, b) => b.score - a.score);
 }
 
-function renderWinnerBanner() {
-  const isFinalRound = state.currentRoundIndex === state.game.rounds.length - 1;
-  if (!isFinalRound) {
-    el.winnerBanner.classList.add("hidden");
+function renderGameResult() {
+  if (!state.gameEnded) {
+    el.gameResult.classList.add("hidden");
     return;
   }
 
-  const winner = getWinner();
+  const rankings = sortedTeams();
+  const winner = rankings[0];
+  const other = rankings[1];
   if (!winner) {
-    el.winnerBanner.classList.add("hidden");
+    el.gameResult.classList.add("hidden");
     return;
   }
 
-  el.winnerBanner.classList.remove("hidden");
-  el.winnerBanner.textContent = `Winning team: ${winner.name} with ${winner.score} points`;
+  const otherLine = other ? `<div class="game-result-sub">${other.name}: ${other.score} points</div>` : "";
+  el.gameResult.innerHTML = `<div>🏆 Winner: ${winner.name} — ${winner.score} points</div>${otherLine}`;
+  el.gameResult.classList.remove("hidden");
 }
 
 function buildTeamSide(teamIndex, round) {
@@ -207,8 +205,8 @@ function buildTeamSide(teamIndex, round) {
     return '<div class="team-side-card empty">Add a second team to see both side displays.</div>';
   }
 
-  const totalStrikes = Math.max(0, Number(round.strikes[teamIndex]) || 0);
-  const strikeRows = Array.from({ length: totalStrikes || 1 }, (_, index) => (totalStrikes ? "❌" : "—"));
+  const strikeCount = Math.max(0, Number(round.strikes[teamIndex]) || 0);
+  const strikeRows = Array.from({ length: strikeCount || 1 }, () => (strikeCount ? "❌" : "—"));
   const strikeHtml = strikeRows.map((item) => `<span>${item}</span>`).join("");
 
   return `
@@ -230,10 +228,10 @@ function renderPlayView() {
   el.questionText.textContent = `We asked 100 people... ${round.question}`;
 
   el.prevRoundBtn.disabled = state.currentRoundIndex <= 0;
-  el.nextRoundBtn.disabled = state.currentRoundIndex >= state.game.rounds.length - 1;
+  const isFinalRound = state.currentRoundIndex === state.game.rounds.length - 1;
+  el.nextRoundBtn.textContent = isFinalRound ? "End Game" : "Next Round";
 
   el.answersBoard.innerHTML = "";
-
   round.answers.forEach((answer, answerIndex) => {
     const tile = document.createElement("article");
     tile.className = "answer-tile";
@@ -289,12 +287,12 @@ function renderPlayView() {
 
   el.leftTeamDisplay.innerHTML = buildTeamSide(0, round);
   el.rightTeamDisplay.innerHTML = buildTeamSide(1, round);
-
-  renderWinnerBanner();
+  renderGameResult();
 }
 
 function switchToPlay() {
   sanitizeGame();
+  state.gameEnded = false;
   playSound(sounds.theme);
   el.setupPanel.classList.add("hidden");
   el.playPanel.classList.remove("hidden");
@@ -304,6 +302,30 @@ function switchToPlay() {
 function switchToSetup() {
   el.setupPanel.classList.remove("hidden");
   el.playPanel.classList.add("hidden");
+}
+
+function buildPrintableSheet() {
+  sanitizeGame();
+  const roundsHtml = state.game.rounds.map((round, index) => {
+    const answers = round.answers
+      .map((answer, i) => `<li>${i + 1}. ${answer.text} — ${answer.points} pts</li>`)
+      .join("");
+    return `<section><h2>Round ${index + 1}</h2><p><strong>Question:</strong> ${round.question}</p><ol>${answers}</ol></section>`;
+  }).join("");
+
+  return `<!doctype html><html><head><meta charset="utf-8"><title>${state.game.title} - Answer Sheet</title><style>body{font-family:Arial,sans-serif;padding:24px;}h1,h2{margin-bottom:8px;}section{margin-bottom:16px;border-bottom:1px solid #ccc;padding-bottom:10px;}li{margin:4px 0;}</style></head><body><h1>${state.game.title} - Printable Answer Sheet</h1>${roundsHtml}</body></html>`;
+}
+
+function downloadPrintableSheet() {
+  const sheet = buildPrintableSheet();
+  const blob = new Blob([sheet], { type: "text/html" });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  const safeTitle = (state.game.title || "family-fortunes").replace(/[^a-z0-9]+/gi, "-").toLowerCase();
+  link.href = url;
+  link.download = `${safeTitle}-answer-sheet.html`;
+  link.click();
+  URL.revokeObjectURL(url);
 }
 
 function downloadGameFile() {
@@ -352,6 +374,7 @@ function loadGameFile(file) {
         state.game.rounds.push(createRound());
       }
 
+      state.gameEnded = false;
       state.game.rounds.forEach(ensureRoundTeamData);
       state.currentRoundIndex = 0;
       el.gameTitle.value = state.game.title;
@@ -379,6 +402,7 @@ function resetScores() {
     round.roundScores = round.roundScores.map(() => 0);
   });
 
+  state.gameEnded = false;
   renderPlayView();
 }
 
@@ -386,15 +410,23 @@ el.addRoundBtn.addEventListener("click", () => addRound());
 el.startGameBtn.addEventListener("click", switchToPlay);
 el.backToEditBtn.addEventListener("click", switchToSetup);
 el.saveGameBtn.addEventListener("click", downloadGameFile);
+el.downloadSheetBtn.addEventListener("click", downloadPrintableSheet);
 el.loadGameInput.addEventListener("change", (event) => loadGameFile(event.target.files[0]));
 
 el.prevRoundBtn.addEventListener("click", () => {
   state.currentRoundIndex = Math.max(0, state.currentRoundIndex - 1);
+  state.gameEnded = false;
   renderPlayView();
 });
 
 el.nextRoundBtn.addEventListener("click", () => {
-  state.currentRoundIndex = Math.min(state.game.rounds.length - 1, state.currentRoundIndex + 1);
+  const isFinalRound = state.currentRoundIndex === state.game.rounds.length - 1;
+  if (isFinalRound) {
+    state.gameEnded = true;
+  } else {
+    state.currentRoundIndex += 1;
+    state.gameEnded = false;
+  }
   renderPlayView();
 });
 
