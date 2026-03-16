@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Family Fortunes Classroom Game</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header>
+    <h1>Family Fortunes Classroom Game</h1>
+    <p>Create rounds, save/load games, and reveal answers while keeping score.</p>
+  </header>
+
+  <main>
+    <section class="panel" id="setup-panel">
+      <h2>Game Setup</h2>
+
+      <label for="game-title">Game Title</label>
+      <input id="game-title" type="text" placeholder="e.g. Year 5 Friday Quiz" />
+
+      <label for="team-names">Team Names (comma separated)</label>
+      <input id="team-names" type="text" placeholder="Red Team, Blue Team" />
+
+      <div class="actions-row">
+        <button id="add-round-btn" type="button">Add Round</button>
+        <button id="start-game-btn" type="button">Start Game</button>
+      </div>
+
+      <div class="actions-row">
+        <button id="save-game-btn" type="button">Save Game File</button>
+        <label class="file-label" for="load-game-input">Load Game File</label>
+        <input id="load-game-input" type="file" accept=".txt,.json,.ffgame" />
+      </div>
+
+      <div id="round-editor-list"></div>
+    </section>
+
+    <section class="panel hidden" id="play-panel">
+      <h2 id="play-title">Game in Play</h2>
+      <div class="round-header">
+        <button id="prev-round-btn" type="button">Previous Round</button>
+        <p id="round-indicator"></p>
+        <button id="next-round-btn" type="button">Next Round</button>
+      </div>
+
+      <div class="question-card">
+        <h3 id="question-text"></h3>
+      </div>
+
+      <div id="answers-board"></div>
+
+      <section class="scoreboard">
+        <h3>Scoreboard</h3>
+        <div id="teams-list"></div>
+      </section>
+
+      <div class="actions-row">
+        <button id="back-to-edit-btn" type="button">Back to Setup</button>
+        <button id="reset-scores-btn" type="button" class="danger">Reset Scores</button>
+      </div>
+    </section>
+  </main>
+
+  <template id="round-template">
+    <article class="round-editor">
+      <div class="round-top">
+        <h3 class="round-number"></h3>
+        <button class="remove-round-btn" type="button">Remove Round</button>
+      </div>
+
+      <label>Question</label>
+      <input class="round-question" type="text" placeholder="Survey question" />
+
+      <div class="answers-editor"></div>
+      <button class="add-answer-btn" type="button">Add Answer</button>
+    </article>
+  </template>
+
+  <template id="answer-editor-template">
+    <div class="answer-row">
+      <input class="answer-text" type="text" placeholder="Answer text" />
+      <input class="answer-points" type="number" min="0" step="1" placeholder="Points" />
+      <button class="remove-answer-btn" type="button">✕</button>
+    </div>
+  </template>
+
+  <script src="app.js"></script>
+</body>
+</html>
