@@ -51,10 +51,13 @@ const el = {
   roundIndicator: document.getElementById("round-indicator"),
   questionText: document.getElementById("question-text"),
   answersBoard: document.getElementById("answers-board"),
+  gameLiveContent: document.getElementById("game-live-content"),
   leftTeamDisplay: document.getElementById("left-team-display"),
   rightTeamDisplay: document.getElementById("right-team-display"),
   incorrectControls: document.getElementById("incorrect-controls"),
   gameResult: document.getElementById("game-result"),
+  endgameActions: document.getElementById("endgame-actions"),
+  endgameBackBtn: document.getElementById("endgame-back-btn"),
   backToEditBtn: document.getElementById("back-to-edit-btn"),
   resetScoresBtn: document.getElementById("reset-scores-btn")
 };
@@ -222,6 +225,9 @@ function sortedTeams() {
 
 function renderGameResult() {
   if (!state.gameEnded) {
+    el.playPanel.classList.remove("endgame-screen");
+    el.gameLiveContent.classList.remove("hidden");
+    el.endgameActions.classList.add("hidden");
     el.gameResult.classList.add("hidden");
     return;
   }
@@ -233,6 +239,10 @@ function renderGameResult() {
     el.gameResult.classList.add("hidden");
     return;
   }
+
+  el.playPanel.classList.add("endgame-screen");
+  el.gameLiveContent.classList.add("hidden");
+  el.endgameActions.classList.remove("hidden");
 
   const otherLine = other ? `<div class="game-result-sub">${other.name}: ${other.score} points</div>` : "";
   el.gameResult.innerHTML = `<div>🏆 Winner: ${winner.name} — ${winner.score} points</div>${otherLine}`;
@@ -370,6 +380,7 @@ function switchToPlay() {
 function switchToSetup() {
   el.setupPanel.classList.remove("hidden");
   el.playPanel.classList.add("hidden");
+  el.playPanel.classList.remove("endgame-screen");
 }
 
 function buildPrintableSheet() {
@@ -496,6 +507,7 @@ el.gamesLibraryBtn.addEventListener("click", () => {
 });
 el.startGameBtn.addEventListener("click", switchToPlay);
 el.backToEditBtn.addEventListener("click", switchToSetup);
+el.endgameBackBtn.addEventListener("click", switchToSetup);
 el.saveGameBtn.addEventListener("click", downloadGameFile);
 el.downloadSheetBtn.addEventListener("click", downloadPrintableSheet);
 el.loadGameInput.addEventListener("change", (event) => loadGameFile(event.target.files[0]));
