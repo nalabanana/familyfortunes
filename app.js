@@ -58,7 +58,6 @@ const el = {
   gameResult: document.getElementById("game-result"),
   endgameActions: document.getElementById("endgame-actions"),
   endgameBackBtn: document.getElementById("endgame-back-btn"),
-  backToEditBtn: document.getElementById("back-to-edit-btn"),
   resetScoresBtn: document.getElementById("reset-scores-btn")
 };
 
@@ -506,7 +505,6 @@ el.gamesLibraryBtn.addEventListener("click", () => {
   window.open("https://github.com/nalabanana/familyfortunes/tree/main/games", "_blank", "noopener,noreferrer");
 });
 el.startGameBtn.addEventListener("click", switchToPlay);
-el.backToEditBtn.addEventListener("click", switchToSetup);
 el.endgameBackBtn.addEventListener("click", switchToSetup);
 el.saveGameBtn.addEventListener("click", downloadGameFile);
 el.downloadSheetBtn.addEventListener("click", downloadPrintableSheet);
