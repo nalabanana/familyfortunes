@@ -10,6 +10,7 @@
   <main>
     <section class="panel" id="setup-panel">
       <div class="setup-top-row">
+        <h1 class="app-heading">🏫 Classroom Family Fortunes</h1>
         <button id="start-game-btn" type="button" class="success">Start Game</button>
       </div>
 
@@ -19,7 +20,16 @@
         <button id="open-game-btn" type="button">Open Game File</button>
         <button id="save-game-btn" type="button">Save Game File</button>
         <button id="games-library-btn" type="button">Games Library</button>
+        <a href="how-to-play.html" class="file-label">How to Play</a>
       </div>
+      <section id="games-library-panel" class="library-panel hidden">
+        <div class="library-header">
+          <h3>Built-in Game Files</h3>
+          <button id="close-library-btn" type="button">Close</button>
+        </div>
+        <p class="library-copy">Choose a game file from the local `games` folder.</p>
+        <div id="games-library-list" class="library-list"></div>
+      </section>
       <input id="load-game-input" type="file" accept=".txt,.json,.ffgame" />
 
       <label for="game-title">Game Title</label>
@@ -50,6 +60,17 @@
           <p>Bonus Answers</p>
           <label><input type="radio" name="bonus-answers" id="bonus-answers-on" value="on" /> On</label>
           <label><input type="radio" name="bonus-answers" id="bonus-answers-off" value="off" checked /> Off</label>
+        </div>
+
+        <div class="option-row theme-picker-row">
+          <label for="theme-picker">Theme</label>
+          <select id="theme-picker">
+            <option value="classic">Classic</option>
+            <option value="light">Light</option>
+            <option value="sunset">Sunset</option>
+            <option value="ocean">Ocean</option>
+            <option value="forest">Forest</option>
+          </select>
         </div>
       </section>
 
@@ -88,9 +109,10 @@
           <aside id="right-team-display" class="team-side"></aside>
         </div>
 
-        <div id="incorrect-controls" class="actions-row"></div>
+        <div id="incorrect-controls" class="actions-row hidden"></div>
 
         <div class="actions-row">
+          <button id="end-game-btn" type="button" class="danger">End Game</button>
           <button id="reset-scores-btn" type="button" class="danger">Reset Scores</button>
         </div>
       </div>
@@ -101,12 +123,20 @@
       </div>
     </section>
   </main>
+  <div id="confetti-layer" aria-hidden="true"></div>
+  <footer class="site-footer">
+    Created at <a href="https://kes.school" target="_blank" rel="noopener noreferrer">King Edward VI School Southampton</a>. Based on a PowerPoint resource from <a href="https://craigndave.org" target="_blank" rel="noopener noreferrer">craigndave.org</a>
+  </footer>
 
   <template id="round-template">
     <article class="round-editor">
       <div class="round-top">
         <h3 class="round-number"></h3>
-        <button class="remove-round-btn" type="button">Remove Round</button>
+        <div class="round-actions">
+          <button class="move-round-up-btn" type="button">Move Up</button>
+          <button class="move-round-down-btn" type="button">Move Down</button>
+          <button class="remove-round-btn" type="button">Delete Round</button>
+        </div>
       </div>
 
       <label>Question</label>

@@ -1,0 +1,130 @@
+{
+  "title": "OCR A Level Computer Science - Software and Programming",
+  "rounds": [
+    {
+      "question": "Name a stage in the software development life cycle",
+      "answers": [
+        {
+          "text": "Analysis",
+          "points": 24
+        },
+        {
+          "text": "Design",
+          "points": 22
+        },
+        {
+          "text": "Implementation",
+          "points": 20
+        },
+        {
+          "text": "Testing",
+          "points": 18
+        },
+        {
+          "text": "Maintenance",
+          "points": 16
+        }
+      ]
+    },
+    {
+      "question": "Name a kind of programming paradigm",
+      "answers": [
+        {
+          "text": "Procedural",
+          "points": 26
+        },
+        {
+          "text": "Object-oriented",
+          "points": 24
+        },
+        {
+          "text": "Declarative",
+          "points": 18
+        },
+        {
+          "text": "Functional",
+          "points": 18
+        },
+        {
+          "text": "Logic",
+          "points": 14
+        }
+      ]
+    },
+    {
+      "question": "Name a feature of object-oriented programming",
+      "answers": [
+        {
+          "text": "Encapsulation",
+          "points": 24
+        },
+        {
+          "text": "Inheritance",
+          "points": 22
+        },
+        {
+          "text": "Polymorphism",
+          "points": 20
+        },
+        {
+          "text": "Class",
+          "points": 18
+        },
+        {
+          "text": "Object",
+          "points": 16
+        }
+      ]
+    },
+    {
+      "question": "Name something recursion needs to work properly",
+      "answers": [
+        {
+          "text": "Base case",
+          "points": 32
+        },
+        {
+          "text": "Recursive call",
+          "points": 24
+        },
+        {
+          "text": "Stack memory",
+          "points": 18
+        },
+        {
+          "text": "Termination condition",
+          "points": 14
+        },
+        {
+          "text": "Smaller subproblem",
+          "points": 12
+        }
+      ]
+    },
+    {
+      "question": "Name a type of testing",
+      "answers": [
+        {
+          "text": "Unit testing",
+          "points": 24
+        },
+        {
+          "text": "Integration testing",
+          "points": 22
+        },
+        {
+          "text": "System testing",
+          "points": 20
+        },
+        {
+          "text": "Beta testing",
+          "points": 18
+        },
+        {
+          "text": "Acceptance testing",
+          "points": 16
+        }
+      ]
+    }
+  ]
+}

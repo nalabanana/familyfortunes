@@ -2,6 +2,7 @@ const state = {
   game: {
     title: "",
     options: {
+      theme: "classic",
       randomRoundOrder: false,
       themeMusic: true,
       bonusAnswers: false
@@ -13,7 +14,9 @@ const state = {
     rounds: []
   },
   currentRoundIndex: 0,
-  gameEnded: false
+  gameEnded: false,
+  gamesLibraryIndex: null,
+  confettiActive: false
 };
 
 const sounds = {
@@ -26,9 +29,14 @@ const sounds = {
 const el = {
   setupPanel: document.getElementById("setup-panel"),
   playPanel: document.getElementById("play-panel"),
+  confettiLayer: document.getElementById("confetti-layer"),
+  gamesLibraryPanel: document.getElementById("games-library-panel"),
+  gamesLibraryList: document.getElementById("games-library-list"),
+  closeLibraryBtn: document.getElementById("close-library-btn"),
   gameTitle: document.getElementById("game-title"),
   teamName1: document.getElementById("team-name-1"),
   teamName2: document.getElementById("team-name-2"),
+  themePicker: document.getElementById("theme-picker"),
   randomOrderOn: document.getElementById("random-order-on"),
   randomOrderOff: document.getElementById("random-order-off"),
   themeMusicOn: document.getElementById("theme-music-on"),
@@ -58,6 +66,7 @@ const el = {
   gameResult: document.getElementById("game-result"),
   endgameActions: document.getElementById("endgame-actions"),
   endgameBackBtn: document.getElementById("endgame-back-btn"),
+  endGameBtn: document.getElementById("end-game-btn"),
   resetScoresBtn: document.getElementById("reset-scores-btn")
 };
 
@@ -66,19 +75,102 @@ function playSound(sound) {
   sound.play().catch(() => {});
 }
 
+function applyTheme(themeName = "classic") {
+  const theme = ["classic", "light", "sunset", "ocean", "forest"].includes(themeName) ? themeName : "classic";
+  document.body.dataset.theme = theme;
+  state.game.options.theme = theme;
+}
+
+async function fetchJson(url) {
+  const response = await fetch(url);
+  if (!response.ok) {
+    throw new Error(`Request failed (${response.status})`);
+  }
+  return response.json();
+}
+
+async function fetchText(url) {
+  const response = await fetch(url);
+  if (!response.ok) {
+    throw new Error(`Request failed (${response.status})`);
+  }
+  return response.text();
+}
+
+async function ensureGamesLibraryIndex() {
+  if (Array.isArray(state.gamesLibraryIndex)) {
+    return state.gamesLibraryIndex;
+  }
+
+  const games = await fetchJson("games/index.json");
+  state.gamesLibraryIndex = Array.isArray(games) ? games : [];
+  return state.gamesLibraryIndex;
+}
+
+async function loadBuiltInGame(filename) {
+  const contents = await fetchText(`games/${encodeURIComponent(filename)}`);
+  loadGameFromString(contents);
+}
+
+async function renderGamesLibrary() {
+  el.gamesLibraryList.innerHTML = "";
+
+  let games;
+  try {
+    games = await ensureGamesLibraryIndex();
+  } catch (error) {
+    el.gamesLibraryList.innerHTML = `<p class="library-empty">Could not read the games folder. Try opening the app through a local web server. (${error.message})</p>`;
+    return;
+  }
+
+  if (games.length === 0) {
+    el.gamesLibraryList.innerHTML = '<p class="library-empty">No bundled game files were found.</p>';
+    return;
+  }
+
+  games.forEach((game) => {
+    const card = document.createElement("article");
+    card.className = "library-item";
+
+    const title = document.createElement("h4");
+    title.textContent = game.title || game.filename;
+
+    const meta = document.createElement("p");
+    meta.className = "library-meta";
+    meta.textContent = game.filename;
+
+    const loadBtn = document.createElement("button");
+    loadBtn.type = "button";
+    loadBtn.textContent = "Load This Game";
+    loadBtn.addEventListener("click", async () => {
+      try {
+        await loadBuiltInGame(game.filename);
+        el.gamesLibraryPanel.classList.add("hidden");
+      } catch (error) {
+        alert(`Could not load game file: ${error.message}`);
+      }
+    });
+
+    card.append(title, meta, loadBtn);
+    el.gamesLibraryList.appendChild(card);
+  });
+}
+
 function createRound(
   question = "",
   answers = [{ text: "", points: 0, revealed: false }],
   strikes = [],
   roundScores = [],
-  bonusAnswerIndex = null
+  bonusAnswerIndex = null,
+  questionRevealed = false
 ) {
   return {
     question,
     answers: answers.map((a) => ({ ...a, revealed: !!a.revealed })),
     strikes: [...strikes],
     roundScores: [...roundScores],
-    bonusAnswerIndex: Number.isInteger(bonusAnswerIndex) ? bonusAnswerIndex : null
+    bonusAnswerIndex: Number.isInteger(bonusAnswerIndex) ? bonusAnswerIndex : null,
+    questionRevealed: !!questionRevealed
   };
 }
 
@@ -98,6 +190,22 @@ function addRound(round = createRound()) {
   renderRoundEditors();
 }
 
+function moveRound(fromIndex, toIndex) {
+  if (
+    fromIndex === toIndex ||
+    fromIndex < 0 ||
+    toIndex < 0 ||
+    fromIndex >= state.game.rounds.length ||
+    toIndex >= state.game.rounds.length
+  ) {
+    return;
+  }
+
+  const [round] = state.game.rounds.splice(fromIndex, 1);
+  state.game.rounds.splice(toIndex, 0, round);
+  renderRoundEditors();
+}
+
 function shuffleRounds() {
   for (let i = state.game.rounds.length - 1; i > 0; i -= 1) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -111,6 +219,13 @@ function renderRoundEditors() {
   state.game.rounds.forEach((round, roundIndex) => {
     const roundNode = el.roundTemplate.content.firstElementChild.cloneNode(true);
     roundNode.querySelector(".round-number").textContent = `Round ${roundIndex + 1}`;
+
+    const moveUpBtn = roundNode.querySelector(".move-round-up-btn");
+    const moveDownBtn = roundNode.querySelector(".move-round-down-btn");
+    moveUpBtn.disabled = roundIndex === 0;
+    moveDownBtn.disabled = roundIndex === state.game.rounds.length - 1;
+    moveUpBtn.addEventListener("click", () => moveRound(roundIndex, roundIndex - 1));
+    moveDownBtn.addEventListener("click", () => moveRound(roundIndex, roundIndex + 1));
 
     const qInput = roundNode.querySelector(".round-question");
     qInput.value = round.question;
@@ -175,18 +290,22 @@ function parseTeamsFromInput() {
 }
 
 function syncOptionsFromInputs() {
+  state.game.options.theme = el.themePicker.value || "classic";
   state.game.options.randomRoundOrder = el.randomOrderOn.checked;
   state.game.options.themeMusic = el.themeMusicOn.checked;
   state.game.options.bonusAnswers = el.bonusAnswersOn.checked;
+  applyTheme(state.game.options.theme);
 }
 
 function syncInputsFromOptions() {
+  el.themePicker.value = state.game.options.theme || "classic";
   el.randomOrderOn.checked = !!state.game.options.randomRoundOrder;
   el.randomOrderOff.checked = !state.game.options.randomRoundOrder;
   el.themeMusicOn.checked = !!state.game.options.themeMusic;
   el.themeMusicOff.checked = !state.game.options.themeMusic;
   el.bonusAnswersOn.checked = !!state.game.options.bonusAnswers;
   el.bonusAnswersOff.checked = !state.game.options.bonusAnswers;
+  applyTheme(state.game.options.theme || "classic");
 }
 
 function sanitizeGame() {
@@ -206,7 +325,8 @@ function sanitizeGame() {
         .filter((answer) => answer.text),
       strikes: Array.isArray(round.strikes) ? round.strikes : [],
       roundScores: Array.isArray(round.roundScores) ? round.roundScores : [],
-      bonusAnswerIndex: Number.isInteger(round.bonusAnswerIndex) ? round.bonusAnswerIndex : null
+      bonusAnswerIndex: Number.isInteger(round.bonusAnswerIndex) ? round.bonusAnswerIndex : null,
+      questionRevealed: false
     }))
     .filter((round) => round.question && round.answers.length > 0);
 
@@ -222,12 +342,43 @@ function sortedTeams() {
   return [...state.game.teams].sort((a, b) => b.score - a.score);
 }
 
+function clearConfetti() {
+  el.confettiLayer.innerHTML = "";
+  el.confettiLayer.classList.remove("active");
+  state.confettiActive = false;
+}
+
+function launchConfetti() {
+  if (state.confettiActive) return;
+
+  state.confettiActive = true;
+  el.confettiLayer.innerHTML = "";
+  el.confettiLayer.classList.add("active");
+
+  const colors = ["#f59e0b", "#38bdf8", "#84cc16", "#fb7185", "#facc15", "#ffffff"];
+  for (let i = 0; i < 120; i += 1) {
+    const piece = document.createElement("span");
+    piece.className = "confetti-piece";
+    piece.style.left = `${Math.random() * 100}%`;
+    piece.style.background = colors[i % colors.length];
+    piece.style.animationDelay = `${Math.random() * 0.8}s`;
+    piece.style.animationDuration = `${4 + Math.random() * 1.8}s`;
+    piece.style.transform = `translateY(-12vh) rotate(${Math.random() * 360}deg)`;
+    el.confettiLayer.appendChild(piece);
+  }
+
+  window.setTimeout(() => {
+    clearConfetti();
+  }, 6500);
+}
+
 function renderGameResult() {
   if (!state.gameEnded) {
     el.playPanel.classList.remove("endgame-screen");
     el.gameLiveContent.classList.remove("hidden");
     el.endgameActions.classList.add("hidden");
     el.gameResult.classList.add("hidden");
+    clearConfetti();
     return;
   }
 
@@ -246,6 +397,7 @@ function renderGameResult() {
   const otherLine = other ? `<div class="game-result-sub">${other.name}: ${other.score} points</div>` : "";
   el.gameResult.innerHTML = `<div>🏆 Winner: ${winner.name} — ${winner.score} points</div>${otherLine}`;
   el.gameResult.classList.remove("hidden");
+  launchConfetti();
 }
 
 function buildTeamSide(teamIndex, round) {
@@ -264,6 +416,7 @@ function buildTeamSide(teamIndex, round) {
       <p>Round points: <strong>${round.roundScores[teamIndex]}</strong></p>
       <p>Total points: <strong>${team.score}</strong></p>
       <div class="strike-stack">${strikeHtml}</div>
+      <button type="button" class="tiny danger side-strike-btn" data-team-index="${teamIndex}">Add ❌</button>
     </div>
   `;
 }
@@ -289,7 +442,17 @@ function renderPlayView() {
 
   el.playTitle.textContent = state.game.title;
   el.roundIndicator.textContent = `Round ${state.currentRoundIndex + 1} of ${state.game.rounds.length}`;
-  el.questionText.textContent = `We asked 100 people... ${round.question}`;
+  if (round.questionRevealed) {
+    el.questionText.innerHTML = `<span>We asked 100 people... ${round.question}</span>`;
+    el.questionText.classList.remove("question-reveal-prompt");
+  } else {
+    el.questionText.innerHTML = '<button type="button" class="question-reveal-btn">Reveal Question</button>';
+    el.questionText.classList.add("question-reveal-prompt");
+    el.questionText.querySelector(".question-reveal-btn").addEventListener("click", () => {
+      round.questionRevealed = true;
+      renderPlayView();
+    });
+  }
 
   el.prevRoundBtn.disabled = state.currentRoundIndex <= 0;
   const isFinalRound = state.currentRoundIndex === state.game.rounds.length - 1;
@@ -343,21 +506,17 @@ function renderPlayView() {
     el.answersBoard.appendChild(tile);
   });
 
-  el.incorrectControls.innerHTML = "";
-  state.game.teams.forEach((team, teamIndex) => {
-    const btn = document.createElement("button");
-    btn.className = "tiny danger";
-    btn.textContent = `Add ❌ ${team.name}`;
-    btn.addEventListener("click", () => {
+  el.leftTeamDisplay.innerHTML = buildTeamSide(0, round);
+  el.rightTeamDisplay.innerHTML = buildTeamSide(1, round);
+  [el.leftTeamDisplay, el.rightTeamDisplay].forEach((side) => {
+    side.querySelector(".side-strike-btn")?.addEventListener("click", (event) => {
+      const teamIndex = Number(event.currentTarget.dataset.teamIndex);
       round.strikes[teamIndex] += 1;
       playSound(sounds.incorrect);
       renderPlayView();
     });
-    el.incorrectControls.appendChild(btn);
   });
-
-  el.leftTeamDisplay.innerHTML = buildTeamSide(0, round);
-  el.rightTeamDisplay.innerHTML = buildTeamSide(1, round);
+  el.incorrectControls.innerHTML = "";
   renderGameResult();
 }
 
@@ -380,6 +539,11 @@ function switchToSetup() {
   el.setupPanel.classList.remove("hidden");
   el.playPanel.classList.add("hidden");
   el.playPanel.classList.remove("endgame-screen");
+}
+
+function endGame() {
+  state.gameEnded = true;
+  renderPlayView();
 }
 
 function buildPrintableSheet() {
@@ -406,9 +570,22 @@ function downloadPrintableSheet() {
   URL.revokeObjectURL(url);
 }
 
+function buildMinimalGameData() {
+  return {
+    title: state.game.title,
+    rounds: state.game.rounds.map((round) => ({
+      question: round.question,
+      answers: round.answers.map((answer) => ({
+        text: answer.text,
+        points: answer.points
+      }))
+    }))
+  };
+}
+
 function downloadGameFile() {
   sanitizeGame();
-  const blob = new Blob([JSON.stringify(state.game, null, 2)], { type: "text/plain" });
+  const blob = new Blob([JSON.stringify(buildMinimalGameData(), null, 2)], { type: "text/plain" });
   const url = URL.createObjectURL(blob);
   const link = document.createElement("a");
   const safeTitle = (state.game.title || "family-fortunes-game").replace(/[^a-z0-9]+/gi, "-").toLowerCase();
@@ -422,13 +599,12 @@ function applyLoadedGame(loaded) {
   state.game = {
     title: String(loaded.title || "Family Fortunes Game"),
     options: {
-      randomRoundOrder: Boolean(loaded.options?.randomRoundOrder),
-      themeMusic: loaded.options?.themeMusic !== false,
-      bonusAnswers: Boolean(loaded.options?.bonusAnswers)
+      theme: "classic",
+      randomRoundOrder: false,
+      themeMusic: true,
+      bonusAnswers: false
     },
-    teams: Array.isArray(loaded.teams) && loaded.teams.length
-      ? loaded.teams.map((team) => ({ name: String(team.name || "Team"), score: Number(team.score) || 0 }))
-      : [{ name: "Team A", score: 0 }, { name: "Team B", score: 0 }],
+    teams: [{ name: "Team A", score: 0 }, { name: "Team B", score: 0 }],
     rounds: loaded.rounds.map((round) => createRound(
       String(round.question || ""),
       Array.isArray(round.answers)
@@ -438,9 +614,10 @@ function applyLoadedGame(loaded) {
             revealed: false
           }))
         : [],
-      Array.isArray(round.strikes) ? round.strikes : [],
-      Array.isArray(round.roundScores) ? round.roundScores : [],
-      Number.isInteger(round.bonusAnswerIndex) ? round.bonusAnswerIndex : null
+      [],
+      [],
+      null,
+      false
     ))
   };
 
@@ -493,6 +670,7 @@ function resetScores() {
     });
     round.strikes = round.strikes.map(() => 0);
     round.roundScores = round.roundScores.map(() => 0);
+    round.questionRevealed = false;
   });
 
   state.gameEnded = false;
@@ -501,14 +679,18 @@ function resetScores() {
 
 el.addRoundBtn.addEventListener("click", () => addRound());
 el.openGameBtn.addEventListener("click", () => el.loadGameInput.click());
-el.gamesLibraryBtn.addEventListener("click", () => {
-  window.open("https://github.com/nalabanana/familyfortunes/tree/main/games", "_blank", "noopener,noreferrer");
+el.gamesLibraryBtn.addEventListener("click", async () => {
+  await renderGamesLibrary();
+  el.gamesLibraryPanel.classList.toggle("hidden");
 });
+el.closeLibraryBtn.addEventListener("click", () => el.gamesLibraryPanel.classList.add("hidden"));
 el.startGameBtn.addEventListener("click", switchToPlay);
 el.endgameBackBtn.addEventListener("click", switchToSetup);
 el.saveGameBtn.addEventListener("click", downloadGameFile);
 el.downloadSheetBtn.addEventListener("click", downloadPrintableSheet);
 el.loadGameInput.addEventListener("change", (event) => loadGameFile(event.target.files[0]));
+el.endGameBtn.addEventListener("click", endGame);
+el.themePicker.addEventListener("change", (event) => applyTheme(event.target.value));
 
 el.prevRoundBtn.addEventListener("click", () => {
   state.currentRoundIndex = Math.max(0, state.currentRoundIndex - 1);
@@ -519,12 +701,12 @@ el.prevRoundBtn.addEventListener("click", () => {
 el.nextRoundBtn.addEventListener("click", () => {
   const isFinalRound = state.currentRoundIndex === state.game.rounds.length - 1;
   if (isFinalRound) {
-    state.gameEnded = true;
+    endGame();
   } else {
     state.currentRoundIndex += 1;
     state.gameEnded = false;
+    renderPlayView();
   }
-  renderPlayView();
 });
 
 el.resetScoresBtn.addEventListener("click", resetScores);

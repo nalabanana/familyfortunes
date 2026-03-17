@@ -1,0 +1,130 @@
+{
+  "title": "OCR A Level Computer Science - Databases and Functional Programming",
+  "rounds": [
+    {
+      "question": "Name a field you might find in a student database",
+      "answers": [
+        {
+          "text": "Student ID",
+          "points": 24
+        },
+        {
+          "text": "Name",
+          "points": 22
+        },
+        {
+          "text": "Date of birth",
+          "points": 20
+        },
+        {
+          "text": "Tutor group",
+          "points": 18
+        },
+        {
+          "text": "Exam grade",
+          "points": 16
+        }
+      ]
+    },
+    {
+      "question": "Name a database concept",
+      "answers": [
+        {
+          "text": "Table",
+          "points": 24
+        },
+        {
+          "text": "Record",
+          "points": 22
+        },
+        {
+          "text": "Field",
+          "points": 20
+        },
+        {
+          "text": "Primary key",
+          "points": 18
+        },
+        {
+          "text": "Foreign key",
+          "points": 16
+        }
+      ]
+    },
+    {
+      "question": "Name an SQL command or clause",
+      "answers": [
+        {
+          "text": "SELECT",
+          "points": 28
+        },
+        {
+          "text": "FROM",
+          "points": 22
+        },
+        {
+          "text": "WHERE",
+          "points": 20
+        },
+        {
+          "text": "ORDER BY",
+          "points": 16
+        },
+        {
+          "text": "INSERT",
+          "points": 14
+        }
+      ]
+    },
+    {
+      "question": "Name a feature often linked with functional programming",
+      "answers": [
+        {
+          "text": "Pure functions",
+          "points": 24
+        },
+        {
+          "text": "Immutability",
+          "points": 22
+        },
+        {
+          "text": "Higher-order functions",
+          "points": 20
+        },
+        {
+          "text": "Recursion",
+          "points": 18
+        },
+        {
+          "text": "Lambda expressions",
+          "points": 16
+        }
+      ]
+    },
+    {
+      "question": "Name a reason to normalise a database",
+      "answers": [
+        {
+          "text": "Reduce redundancy",
+          "points": 30
+        },
+        {
+          "text": "Improve consistency",
+          "points": 24
+        },
+        {
+          "text": "Avoid update anomalies",
+          "points": 18
+        },
+        {
+          "text": "Save storage",
+          "points": 16
+        },
+        {
+          "text": "Make maintenance easier",
+          "points": 12
+        }
+      ]
+    }
+  ]
+}

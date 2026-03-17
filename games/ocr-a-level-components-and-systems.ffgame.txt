@@ -1,0 +1,130 @@
+{
+  "title": "OCR A Level Computer Science - Components and Systems",
+  "rounds": [
+    {
+      "question": "Name a part of the fetch-decode-execute cycle",
+      "answers": [
+        {
+          "text": "Fetch",
+          "points": 32
+        },
+        {
+          "text": "Decode",
+          "points": 24
+        },
+        {
+          "text": "Execute",
+          "points": 20
+        },
+        {
+          "text": "Increment program counter",
+          "points": 14
+        },
+        {
+          "text": "Store result",
+          "points": 10
+        }
+      ]
+    },
+    {
+      "question": "Name a register used by the CPU",
+      "answers": [
+        {
+          "text": "Program counter",
+          "points": 26
+        },
+        {
+          "text": "MAR",
+          "points": 22
+        },
+        {
+          "text": "MDR",
+          "points": 20
+        },
+        {
+          "text": "CIR",
+          "points": 18
+        },
+        {
+          "text": "Accumulator",
+          "points": 14
+        }
+      ]
+    },
+    {
+      "question": "Name a characteristic of solid state storage",
+      "answers": [
+        {
+          "text": "No moving parts",
+          "points": 28
+        },
+        {
+          "text": "Faster access",
+          "points": 24
+        },
+        {
+          "text": "More durable",
+          "points": 18
+        },
+        {
+          "text": "Lower power use",
+          "points": 16
+        },
+        {
+          "text": "More expensive per GB",
+          "points": 14
+        }
+      ]
+    },
+    {
+      "question": "Name a factor affecting processor performance",
+      "answers": [
+        {
+          "text": "Clock speed",
+          "points": 30
+        },
+        {
+          "text": "Number of cores",
+          "points": 24
+        },
+        {
+          "text": "Cache size",
+          "points": 18
+        },
+        {
+          "text": "Architecture",
+          "points": 16
+        },
+        {
+          "text": "Bus width",
+          "points": 12
+        }
+      ]
+    },
+    {
+      "question": "Name a kind of software interrupt source",
+      "answers": [
+        {
+          "text": "Timer interrupt",
+          "points": 26
+        },
+        {
+          "text": "I/O completion",
+          "points": 24
+        },
+        {
+          "text": "Keyboard input",
+          "points": 20
+        },
+        {
+          "text": "Power issue",
+          "points": 16
+        },
+        {
+          "text": "Exception / error",
+          "points": 14
+        }
+      ]
+    }
+  ]
+}

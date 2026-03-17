@@ -1,0 +1,130 @@
+{
+  "title": "OCR A Level Computer Science - Networks and Web Technologies",
+  "rounds": [
+    {
+      "question": "Name a network protocol",
+      "answers": [
+        {
+          "text": "TCP",
+          "points": 24
+        },
+        {
+          "text": "IP",
+          "points": 22
+        },
+        {
+          "text": "HTTP",
+          "points": 20
+        },
+        {
+          "text": "HTTPS",
+          "points": 18
+        },
+        {
+          "text": "FTP",
+          "points": 16
+        }
+      ]
+    },
+    {
+      "question": "Name something a router can do",
+      "answers": [
+        {
+          "text": "Forward packets",
+          "points": 30
+        },
+        {
+          "text": "Choose route",
+          "points": 22
+        },
+        {
+          "text": "Connect networks",
+          "points": 20
+        },
+        {
+          "text": "Use NAT",
+          "points": 16
+        },
+        {
+          "text": "Filter traffic",
+          "points": 12
+        }
+      ]
+    },
+    {
+      "question": "Name something found in a URL",
+      "answers": [
+        {
+          "text": "Protocol",
+          "points": 24
+        },
+        {
+          "text": "Domain name",
+          "points": 22
+        },
+        {
+          "text": "Path",
+          "points": 20
+        },
+        {
+          "text": "Query string",
+          "points": 18
+        },
+        {
+          "text": "Fragment",
+          "points": 16
+        }
+      ]
+    },
+    {
+      "question": "Name a web technology used by browsers",
+      "answers": [
+        {
+          "text": "HTML",
+          "points": 28
+        },
+        {
+          "text": "CSS",
+          "points": 24
+        },
+        {
+          "text": "JavaScript",
+          "points": 22
+        },
+        {
+          "text": "Cookies",
+          "points": 14
+        },
+        {
+          "text": "Local storage",
+          "points": 12
+        }
+      ]
+    },
+    {
+      "question": "Name a benefit of compression",
+      "answers": [
+        {
+          "text": "Smaller file size",
+          "points": 34
+        },
+        {
+          "text": "Faster transfer",
+          "points": 24
+        },
+        {
+          "text": "Lower storage use",
+          "points": 20
+        },
+        {
+          "text": "Lower bandwidth use",
+          "points": 12
+        },
+        {
+          "text": "Cheaper backup",
+          "points": 10
+        }
+      ]
+    }
+  ]
+}

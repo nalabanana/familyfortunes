@@ -1,28 +1,28 @@
 {
-  "title": "GCSE Computer Science - Programming Foundations",
+  "title": "iGCSE Computer Science - Algorithms, Programming and Logic",
   "rounds": [
     {
       "question": "Name a standard programming construct",
       "answers": [
         {
           "text": "Sequence",
-          "points": 34
-        },
-        {
-          "text": "Selection",
           "points": 28
         },
         {
-          "text": "Iteration",
+          "text": "Selection",
           "points": 24
         },
         {
+          "text": "Iteration",
+          "points": 22
+        },
+        {
           "text": "Subroutine",
-          "points": 8
+          "points": 14
         },
         {
           "text": "Recursion",
-          "points": 6
+          "points": 12
         }
       ]
     },
@@ -31,97 +31,97 @@
       "answers": [
         {
           "text": "Integer",
-          "points": 30
+          "points": 26
         },
         {
           "text": "String",
-          "points": 24
+          "points": 22
         },
         {
           "text": "Boolean",
           "points": 20
         },
         {
-          "text": "Real / Float",
-          "points": 16
-        },
-        {
-          "text": "Character",
-          "points": 10
-        }
-      ]
-    },
-    {
-      "question": "Name a thing a programmer might use to repeat code",
-      "answers": [
-        {
-          "text": "For loop",
-          "points": 31
-        },
-        {
-          "text": "While loop",
-          "points": 27
-        },
-        {
-          "text": "Repeat-until loop",
-          "points": 19
-        },
-        {
-          "text": "Procedure",
-          "points": 13
-        },
-        {
-          "text": "Function",
-          "points": 10
-        }
-      ]
-    },
-    {
-      "question": "Name something used to debug a program",
-      "answers": [
-        {
-          "text": "Test data",
-          "points": 30
-        },
-        {
-          "text": "Breakpoints",
-          "points": 24
-        },
-        {
-          "text": "Trace table",
-          "points": 20
-        },
-        {
-          "text": "Step-through execution",
-          "points": 16
-        },
-        {
-          "text": "Print statement",
-          "points": 10
-        }
-      ]
-    },
-    {
-      "question": "Name a way to store multiple related values",
-      "answers": [
-        {
-          "text": "Array",
-          "points": 40
-        },
-        {
-          "text": "Record",
-          "points": 22
-        },
-        {
-          "text": "List",
+          "text": "Real",
           "points": 18
         },
         {
-          "text": "Tuple",
-          "points": 10
+          "text": "Character",
+          "points": 14
+        }
+      ]
+    },
+    {
+      "question": "Name something you might see in pseudocode",
+      "answers": [
+        {
+          "text": "IF statement",
+          "points": 26
         },
         {
-          "text": "Dictionary",
+          "text": "FOR loop",
+          "points": 22
+        },
+        {
+          "text": "WHILE loop",
+          "points": 20
+        },
+        {
+          "text": "INPUT",
+          "points": 18
+        },
+        {
+          "text": "OUTPUT",
+          "points": 14
+        }
+      ]
+    },
+    {
+      "question": "Name a way to test a program",
+      "answers": [
+        {
+          "text": "Normal data",
+          "points": 24
+        },
+        {
+          "text": "Boundary data",
+          "points": 22
+        },
+        {
+          "text": "Erroneous data",
+          "points": 20
+        },
+        {
+          "text": "Dry run",
+          "points": 18
+        },
+        {
+          "text": "Trace table",
+          "points": 16
+        }
+      ]
+    },
+    {
+      "question": "Name a way to store many related values",
+      "answers": [
+        {
+          "text": "Array",
+          "points": 34
+        },
+        {
+          "text": "List",
+          "points": 24
+        },
+        {
+          "text": "Record",
+          "points": 18
+        },
+        {
+          "text": "File",
+          "points": 14
+        },
+        {
+          "text": "Table",
           "points": 10
         }
       ]

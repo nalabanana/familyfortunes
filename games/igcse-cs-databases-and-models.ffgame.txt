@@ -1,0 +1,130 @@
+{
+  "title": "iGCSE Computer Science - Databases and Models",
+  "rounds": [
+    {
+      "question": "Name a part of a database table",
+      "answers": [
+        {
+          "text": "Field",
+          "points": 24
+        },
+        {
+          "text": "Record",
+          "points": 22
+        },
+        {
+          "text": "Table",
+          "points": 20
+        },
+        {
+          "text": "Primary key",
+          "points": 18
+        },
+        {
+          "text": "Query",
+          "points": 16
+        }
+      ]
+    },
+    {
+      "question": "Name something a model can help you do",
+      "answers": [
+        {
+          "text": "Predict outcomes",
+          "points": 28
+        },
+        {
+          "text": "Test scenarios",
+          "points": 24
+        },
+        {
+          "text": "Reduce risk",
+          "points": 18
+        },
+        {
+          "text": "Save money",
+          "points": 16
+        },
+        {
+          "text": "Visualise systems",
+          "points": 14
+        }
+      ]
+    },
+    {
+      "question": "Name a validation rule",
+      "answers": [
+        {
+          "text": "Range check",
+          "points": 24
+        },
+        {
+          "text": "Length check",
+          "points": 22
+        },
+        {
+          "text": "Type check",
+          "points": 20
+        },
+        {
+          "text": "Presence check",
+          "points": 18
+        },
+        {
+          "text": "Format check",
+          "points": 16
+        }
+      ]
+    },
+    {
+      "question": "Name something a query can do",
+      "answers": [
+        {
+          "text": "Search for records",
+          "points": 30
+        },
+        {
+          "text": "Sort data",
+          "points": 22
+        },
+        {
+          "text": "Filter data",
+          "points": 20
+        },
+        {
+          "text": "Select fields",
+          "points": 16
+        },
+        {
+          "text": "Produce a report",
+          "points": 12
+        }
+      ]
+    },
+    {
+      "question": "Name data a school database might store",
+      "answers": [
+        {
+          "text": "Student name",
+          "points": 24
+        },
+        {
+          "text": "Student ID",
+          "points": 22
+        },
+        {
+          "text": "Attendance",
+          "points": 20
+        },
+        {
+          "text": "Exam results",
+          "points": 18
+        },
+        {
+          "text": "Class group",
+          "points": 16
+        }
+      ]
+    }
+  ]
+}

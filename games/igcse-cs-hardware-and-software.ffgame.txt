@@ -1,0 +1,130 @@
+{
+  "title": "iGCSE Computer Science - Hardware and Software",
+  "rounds": [
+    {
+      "question": "Name a common input device",
+      "answers": [
+        {
+          "text": "Keyboard",
+          "points": 29
+        },
+        {
+          "text": "Mouse",
+          "points": 24
+        },
+        {
+          "text": "Microphone",
+          "points": 18
+        },
+        {
+          "text": "Scanner",
+          "points": 16
+        },
+        {
+          "text": "Touchscreen",
+          "points": 14
+        }
+      ]
+    },
+    {
+      "question": "Name a common output device",
+      "answers": [
+        {
+          "text": "Monitor",
+          "points": 28
+        },
+        {
+          "text": "Printer",
+          "points": 24
+        },
+        {
+          "text": "Speakers",
+          "points": 20
+        },
+        {
+          "text": "Projector",
+          "points": 16
+        },
+        {
+          "text": "Plotter",
+          "points": 12
+        }
+      ]
+    },
+    {
+      "question": "Name a type of storage",
+      "answers": [
+        {
+          "text": "SSD",
+          "points": 26
+        },
+        {
+          "text": "Hard disk drive",
+          "points": 24
+        },
+        {
+          "text": "USB flash drive",
+          "points": 18
+        },
+        {
+          "text": "Optical disc",
+          "points": 16
+        },
+        {
+          "text": "Memory card",
+          "points": 16
+        }
+      ]
+    },
+    {
+      "question": "Name a type of software",
+      "answers": [
+        {
+          "text": "Operating system",
+          "points": 30
+        },
+        {
+          "text": "Utility software",
+          "points": 22
+        },
+        {
+          "text": "Application software",
+          "points": 20
+        },
+        {
+          "text": "Translator",
+          "points": 16
+        },
+        {
+          "text": "Device driver",
+          "points": 12
+        }
+      ]
+    },
+    {
+      "question": "Name something RAM is used for",
+      "answers": [
+        {
+          "text": "Store running programs",
+          "points": 30
+        },
+        {
+          "text": "Store active data",
+          "points": 24
+        },
+        {
+          "text": "Temporary storage",
+          "points": 20
+        },
+        {
+          "text": "Fast access",
+          "points": 14
+        },
+        {
+          "text": "Support multitasking",
+          "points": 12
+        }
+      ]
+    }
+  ]
+}

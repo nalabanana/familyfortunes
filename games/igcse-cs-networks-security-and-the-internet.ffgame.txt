@@ -1,0 +1,130 @@
+{
+  "title": "iGCSE Computer Science - Networks, Security and the Internet",
+  "rounds": [
+    {
+      "question": "Name a network hardware device",
+      "answers": [
+        {
+          "text": "Router",
+          "points": 28
+        },
+        {
+          "text": "Switch",
+          "points": 24
+        },
+        {
+          "text": "NIC",
+          "points": 18
+        },
+        {
+          "text": "Wireless access point",
+          "points": 16
+        },
+        {
+          "text": "Modem",
+          "points": 14
+        }
+      ]
+    },
+    {
+      "question": "Name a cybersecurity threat",
+      "answers": [
+        {
+          "text": "Virus",
+          "points": 26
+        },
+        {
+          "text": "Phishing",
+          "points": 22
+        },
+        {
+          "text": "Hacking",
+          "points": 20
+        },
+        {
+          "text": "Ransomware",
+          "points": 18
+        },
+        {
+          "text": "Spyware",
+          "points": 14
+        }
+      ]
+    },
+    {
+      "question": "Name a method used to keep data safe online",
+      "answers": [
+        {
+          "text": "Encryption",
+          "points": 28
+        },
+        {
+          "text": "Strong passwords",
+          "points": 24
+        },
+        {
+          "text": "Two-factor authentication",
+          "points": 20
+        },
+        {
+          "text": "Firewall",
+          "points": 16
+        },
+        {
+          "text": "Backup",
+          "points": 12
+        }
+      ]
+    },
+    {
+      "question": "Name something a browser can do",
+      "answers": [
+        {
+          "text": "Display web pages",
+          "points": 30
+        },
+        {
+          "text": "Run scripts",
+          "points": 22
+        },
+        {
+          "text": "Store cookies",
+          "points": 18
+        },
+        {
+          "text": "Save bookmarks",
+          "points": 16
+        },
+        {
+          "text": "Download files",
+          "points": 14
+        }
+      ]
+    },
+    {
+      "question": "Name a way to connect to the internet",
+      "answers": [
+        {
+          "text": "Wi-Fi",
+          "points": 30
+        },
+        {
+          "text": "Ethernet",
+          "points": 24
+        },
+        {
+          "text": "Mobile data",
+          "points": 18
+        },
+        {
+          "text": "Broadband router",
+          "points": 16
+        },
+        {
+          "text": "Hotspot",
+          "points": 12
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,134 @@
+{
+  "title": "iGCSE Computer Science - Data Representation",
+  "rounds": [
+    {
+      "question": "Name a unit used to measure data size",
+      "answers": [
+        {
+          "text": "Gigabyte",
+          "points": 24
+        },
+        {
+          "text": "Byte",
+          "points": 22
+        },
+        {
+          "text": "Megabyte",
+          "points": 20
+        },
+        {
+          "text": "Bit",
+          "points": 18
+        },
+        {
+          "text": "Kilobyte",
+          "points": 15
+        },
+        {
+          "text": "Nibble",
+          "points": 1
+        }
+      ]
+    },
+    {
+      "question": "Name something binary can represent in a computer",
+      "answers": [
+        {
+          "text": "Numbers",
+          "points": 28
+        },
+        {
+          "text": "Text",
+          "points": 24
+        },
+        {
+          "text": "Images",
+          "points": 20
+        },
+        {
+          "text": "Sound",
+          "points": 16
+        },
+        {
+          "text": "Instructions",
+          "points": 12
+        }
+      ]
+    },
+    {
+      "question": "Name a file format for images or audio",
+      "answers": [
+        {
+          "text": "JPEG",
+          "points": 24
+        },
+        {
+          "text": "PNG",
+          "points": 22
+        },
+        {
+          "text": "MP3",
+          "points": 20
+        },
+        {
+          "text": "WAV",
+          "points": 18
+        },
+        {
+          "text": "GIF",
+          "points": 16
+        }
+      ]
+    },
+    {
+      "question": "Name a method of error checking or validation",
+      "answers": [
+        {
+          "text": "Parity check",
+          "points": 26
+        },
+        {
+          "text": "Check digit",
+          "points": 22
+        },
+        {
+          "text": "Range check",
+          "points": 20
+        },
+        {
+          "text": "Presence check",
+          "points": 18
+        },
+        {
+          "text": "Echo check",
+          "points": 14
+        }
+      ]
+    },
+    {
+      "question": "Name a way image file size can be affected",
+      "answers": [
+        {
+          "text": "Resolution",
+          "points": 28
+        },
+        {
+          "text": "Colour depth",
+          "points": 24
+        },
+        {
+          "text": "Compression",
+          "points": 20
+        },
+        {
+          "text": "Dimensions",
+          "points": 16
+        },
+        {
+          "text": "File format",
+          "points": 12
+        }
+      ]
+    }
+  ]
+}
