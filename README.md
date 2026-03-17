@@ -29,7 +29,6 @@ Created at King Edward VI School Southampton. Based on a PowerPoint resource fro
 
 The bundled `games/` folder currently includes preset Computer Science packs for:
 
-- GCSE Computer Science
 - iGCSE Computer Science
 - OCR A Level Computer Science
 
@@ -38,6 +37,8 @@ These files are indexed through `games/index.json` so they can be selected insid
 ## Running the app
 
 You can open the app directly in a browser for basic editing and local file loading, but the built-in `Games Library` works best when the app is served through a local web server because it uses `fetch()` to read files from `games/`.
+
+You can also run the app here: https://nalabanana.github.io/familyfortunes/
 
 ### Simple local use
 
